@@ -1,0 +1,310 @@
+.profile-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #D98E24, #11CED4);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  transition: background 0.3s;
+}
+
+.profile-menu {
+  position: absolute;
+  top: 60px;
+  right: 60px;
+  background: #181818;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  min-width: 170px;
+  z-index: 2000;
+  padding: 18px 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .profile-name {
+    color: #fff;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .profile-email {
+    color: #aaa;
+    font-size: 0.85rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    margin-bottom: 10px;
+    word-break: break-all;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    height: 56px;
+    padding: 0 8px;
+
+    .logo p {
+      font-size: 1.1rem;
+      margin-left: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .hamburger-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      margin-right: 4px;
+
+      span {
+        width: 28px;
+        height: 3px;
+        border-radius: 2px;
+      }
+    }
+
+    .mobile-nav {
+      top: 56px;
+      right: 8px;
+      min-width: 140px;
+      padding: 14px 10px 12px 10px;
+      border-radius: 10px;
+
+      p {
+        font-size: 0.98rem;
+        font-weight: 600;
+        padding: 6px 0 2px 0;
+      }
+
+      .btn-primary {
+        font-size: 0.98rem;
+        padding: 8px 0;
+        border-radius: 7px;
+        margin-top: 6px;
+      }
+
+      .mobile-profile-info {
+        padding: 8px 0;
+        border-top: 1px solid #333;
+        margin-top: 8px;
+
+        .mobile-profile-name {
+          color: #fff;
+          font-size: 0.95rem;
+          font-weight: 600;
+          margin-bottom: 3px;
+        }
+
+        .mobile-profile-email {
+          color: #aaa;
+          font-size: 0.8rem;
+          font-weight: 400;
+          margin-bottom: 8px;
+          word-break: break-all;
+        }
+      }
+    }
+  }
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 70px;
+  background-color: #0F0F0F;
+  color: white;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+
+  .logo {
+    p {
+      font-size: 1.5rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      margin-bottom: 0;
+      margin-left: 30px;
+
+      &:hover {
+        color: #007bff;
+      }
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #D98E24, #11CED4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .navigation {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    margin-right: 60px;
+
+    p {
+      margin: 0;
+      cursor: pointer;
+      color: white;
+      font-size: 15px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      transition: color 0.3s ease;
+
+      &.active {
+        color: #007bff;
+        font-weight: bold;
+      }
+
+      &:hover {
+        color: #007bff;
+      }
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #D98E24, #11CED4);
+      color: white;
+      font-size: 15px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background: linear-gradient(90deg, #11CED4, #D98E24);
+      }
+    }
+  }
+
+  .hamburger-menu {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    transition: background 0.2s, border 0.2s;
+    position: relative;
+    z-index: 4000;
+    margin-right: 4px;
+
+    span {
+      width: 28px;
+      height: 3px;
+      border-radius: 2px;
+      background-color: #fff;
+      display: block;
+      transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    }
+
+    &:hover {
+      background: rgba(17,206,212,0.12);
+      border-color: #11CED4;
+    }
+  }
+
+  .hamburger-menu.open span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .hamburger-menu.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger-menu.open span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    gap: 18px;
+    position: absolute;
+    top: 70px;
+    right: 16px;
+    background: #181818;
+    padding: 18px 16px 16px 16px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    min-width: 170px;
+    z-index: 2000;
+
+    p {
+      color: #fff;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      margin: 0 0 2px 0;
+      padding: 0 0 2px 0;
+      cursor: pointer;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #11CED4;
+      }
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #D98E24, #11CED4);
+      color: #fff;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      padding: 10px 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 8px;
+      width: 100%;
+      transition: background 0.3s;
+
+      &:hover {
+        background: linear-gradient(90deg, #11CED4, #D98E24);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .desktop-nav {
+      display: none;
+    }
+
+    .hamburger-menu {
+      display: flex;
+    }
+
+    .mobile-nav {
+      display: flex;
+    }
+
+    .logo p {
+      font-size: 1.2rem;
+      margin-left: 10px;
+    }
+  }
+}

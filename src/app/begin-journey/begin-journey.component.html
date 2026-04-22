@@ -1,0 +1,380 @@
+<div class="begin-journey-intro" *ngIf="!result">
+  <h1 class="gradient-text text-center">
+    Let's Personalize Your <span class="highlight">Wealth Score</span>
+  </h1>
+  <p class="subtitle text-center">
+    Fill in your financial details securely. It only takes 2 minutes.
+  </p>
+  <div class="encryption-info-pill">
+    End–End Encryption <span class="divider"></span> No Sharing of Data
+  </div>
+  <div class="begin-journey-wrapper">
+    <form class="wealth-form" *ngIf="!result" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Personal Information Section -->
+    <div class="form-section">
+      <h2>Personal Informations</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Age</label>
+          <input type="number" formControlName="age" placeholder="Enter your age" required />
+          <div *ngIf="form.get('age')?.invalid && (form.get('age')?.dirty || form.get('age')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('age')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" formControlName="email" placeholder="Enter your email" required />
+          <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('email')?.errors?.['required']">This field cannot be empty</div>
+            <div *ngIf="form.get('email')?.errors?.['email']">Invalid Email</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Monthly Income</label>
+          <div class="input-group">
+            <span class="input-group-text">₹</span>
+            <input type="text" formControlName="monthlyIncome" placeholder="Enter amount" required />
+          </div>
+          <div *ngIf="form.get('monthlyIncome')?.invalid && (form.get('monthlyIncome')?.dirty || form.get('monthlyIncome')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('monthlyIncome')?.errors?.['required']">This field cannot be empty</div>
+            <div *ngIf="form.get('monthlyIncome')?.errors?.['pattern']" style="color: #F04A27;">Enter only numbers, without symbols</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Marital Status</label>
+          <select formControlName="maritalStatus" required>
+          <div *ngIf="form.get('maritalStatus')?.invalid && (form.get('maritalStatus')?.dirty || form.get('maritalStatus')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('maritalStatus')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+          <div *ngIf="form.get('maritalStatus')?.invalid && (form.get('maritalStatus')?.dirty || form.get('maritalStatus')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('maritalStatus')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+            <option>Single</option>
+            <option>Married</option>
+            <option>Divorced</option>
+            <option>Widowed</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Number of Dependents</label>
+          <input type="number" formControlName="dependents" placeholder="Enter count" required />
+          <div *ngIf="form.get('dependents')?.invalid && (form.get('dependents')?.dirty || form.get('dependents')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('dependents')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Location Tier</label>
+          <select formControlName="locationTier" required>
+          <div *ngIf="form.get('locationTier')?.invalid && (form.get('locationTier')?.dirty || form.get('locationTier')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('locationTier')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+          <div *ngIf="form.get('locationTier')?.invalid && (form.get('locationTier')?.dirty || form.get('locationTier')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('locationTier')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+            <option>Tier 1 (Metro)</option>
+            <option>Tier 2 (City/Town)</option>
+            <option>Rural Area</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Risk Profile</label>
+          <select formControlName="riskProfile" required>
+          <div *ngIf="form.get('riskProfile')?.invalid && (form.get('riskProfile')?.dirty || form.get('riskProfile')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('riskProfile')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+          <div *ngIf="form.get('riskProfile')?.invalid && (form.get('riskProfile')?.dirty || form.get('riskProfile')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('riskProfile')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+            <option>Conservative</option>
+            <option>Moderately Conservative</option>
+            <option>Moderate</option>
+            <option>Moderately Aggressive</option>
+            <option>Aggressive</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- Liquidity Assessment Section -->
+    <div class="form-section">
+      <h2>Liquidity Assessment</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Cash in Hand</label>
+          <input type="number" formControlName="cashInHand" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('cashInHand')?.invalid && (form.get('cashInHand')?.dirty || form.get('cashInHand')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('cashInHand')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Savings Account Balance</label>
+          <input type="number" formControlName="savingsBalance" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('savingsBalance')?.invalid && (form.get('savingsBalance')?.dirty || form.get('savingsBalance')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('savingsBalance')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fixed Deposits</label>
+          <input type="number" formControlName="fixedDeposits" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('fixedDeposits')?.invalid && (form.get('fixedDeposits')?.dirty || form.get('fixedDeposits')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('fixedDeposits')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Liquid Mutual Funds</label>
+          <input type="number" formControlName="liquidFunds" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('liquidFunds')?.invalid && (form.get('liquidFunds')?.dirty || form.get('liquidFunds')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('liquidFunds')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Monthly Essential Expenses</label>
+          <input type="number" formControlName="monthlyExpenses" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('monthlyExpenses')?.invalid && (form.get('monthlyExpenses')?.dirty || form.get('monthlyExpenses')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('monthlyExpenses')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Income Stability</label>
+          <select formControlName="incomeStability" required>
+          <div *ngIf="form.get('incomeStability')?.invalid && (form.get('incomeStability')?.dirty || form.get('incomeStability')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('incomeStability')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+          <div *ngIf="form.get('incomeStability')?.invalid && (form.get('incomeStability')?.dirty || form.get('incomeStability')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('incomeStability')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+            <option>Highly Stable (Fixed Salary, Government)</option>
+            <option>Stable (Private Salary, Fixed Income)</option>
+            <option>Moderately Variable (Business, Sales)</option>
+            <option>Highly Variable (Freelance, Business)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- Investment Portfolio Section -->
+    <div class="form-section">
+      <h2>Investment Portfolio</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Equity Investments</label>
+          <input type="number" formControlName="equityInvestments" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('equityInvestments')?.invalid && (form.get('equityInvestments')?.dirty || form.get('equityInvestments')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('equityInvestments')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Fixed Income Investments</label>
+          <input type="number" formControlName="fixedIncomeInvestments" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('fixedIncomeInvestments')?.invalid && (form.get('fixedIncomeInvestments')?.dirty || form.get('fixedIncomeInvestments')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('fixedIncomeInvestments')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Real Estate Investments</label>
+          <input type="number" formControlName="realEstateInvestments" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('realEstateInvestments')?.invalid && (form.get('realEstateInvestments')?.dirty || form.get('realEstateInvestments')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('realEstateInvestments')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Gold & Precious Metals</label>
+          <input type="number" formControlName="goldInvestments" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('goldInvestments')?.invalid && (form.get('goldInvestments')?.dirty || form.get('goldInvestments')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('goldInvestments')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Retirement Accounts</label>
+          <input type="number" formControlName="retirementAccounts" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('retirementAccounts')?.invalid && (form.get('retirementAccounts')?.dirty || form.get('retirementAccounts')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('retirementAccounts')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Monthly Investment Amount</label>
+          <input type="number" formControlName="monthlyInvestment" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('monthlyInvestment')?.invalid && (form.get('monthlyInvestment')?.dirty || form.get('monthlyInvestment')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('monthlyInvestment')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Portfolio Diversification</label>
+          <select formControlName="portfolioDiversification" required>
+          <div *ngIf="form.get('portfolioDiversification')?.invalid && (form.get('portfolioDiversification')?.dirty || form.get('portfolioDiversification')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('portfolioDiversification')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+          <div *ngIf="form.get('portfolioDiversification')?.invalid && (form.get('portfolioDiversification')?.dirty || form.get('portfolioDiversification')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('portfolioDiversification')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+            <option>Highly Diverse</option>
+            <option>Moderately Diverse</option>
+            <option>Somewhat Diverse</option>
+            <option>Concentrated</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Average Annual Return</label>
+          <select formControlName="investmentReturn" required>
+          <div *ngIf="form.get('investmentReturn')?.invalid && (form.get('investmentReturn')?.dirty || form.get('investmentReturn')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('investmentReturn')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+          <div *ngIf="form.get('investmentReturn')?.invalid && (form.get('investmentReturn')?.dirty || form.get('investmentReturn')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('investmentReturn')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+            <option>Negative</option>
+            <option>0-5% per annum</option>
+            <option>5-10% per annum</option>
+            <option>10-15% per annum</option>
+            <option>More than 15% per annum</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- Debt & Liabilities Section -->
+    <div class="form-section">
+      <h2>Debt & Liabilities</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Home Loan Outstanding</label>
+          <input type="number" formControlName="homeLoan" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('homeLoan')?.invalid && (form.get('homeLoan')?.dirty || form.get('homeLoan')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('homeLoan')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Home Loan EMI</label>
+          <input type="number" formControlName="homeLoanEMI" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('homeLoanEMI')?.invalid && (form.get('homeLoanEMI')?.dirty || form.get('homeLoanEMI')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('homeLoanEMI')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Car Loan Outstanding</label>
+          <input type="number" formControlName="carLoan" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('carLoan')?.invalid && (form.get('carLoan')?.dirty || form.get('carLoan')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('carLoan')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Car Loan EMI</label>
+          <input type="number" formControlName="carLoanEMI" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('carLoanEMI')?.invalid && (form.get('carLoanEMI')?.dirty || form.get('carLoanEMI')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('carLoanEMI')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Personal Loan Outstanding</label>
+          <input type="number" formControlName="personalLoan" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('personalLoan')?.invalid && (form.get('personalLoan')?.dirty || form.get('personalLoan')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('personalLoan')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Personal Loan EMI</label>
+          <input type="number" formControlName="personalLoanEMI" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('personalLoanEMI')?.invalid && (form.get('personalLoanEMI')?.dirty || form.get('personalLoanEMI')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('personalLoanEMI')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Credit Card Debt</label>
+          <input type="number" formControlName="creditCardDebt" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('creditCardDebt')?.invalid && (form.get('creditCardDebt')?.dirty || form.get('creditCardDebt')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('creditCardDebt')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Credit Score</label>
+          <input type="text" formControlName="creditScore" placeholder="Enter score" maxlength="3" required />
+          <div *ngIf="form.get('creditScore')?.invalid && (form.get('creditScore')?.dirty || form.get('creditScore')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('creditScore')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+          <div *ngIf="form.get('creditScore')?.invalid && (form.get('creditScore')?.dirty || form.get('creditScore')?.touched)" class="error-message">
+            <div *ngIf="form.get('creditScore')?.errors?.['required']">This field cannot be empty</div>
+            <div *ngIf="form.get('creditScore')?.errors?.['pattern']">Enter only numbers, without commas or symbols. Should be 3 digits</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Insurance Coverage Section -->
+    <div class="form-section">
+      <h2>Insurance Coverage</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Term Life Insurance Cover</label>
+          <input type="number" formControlName="termInsurance" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('termInsurance')?.invalid && (form.get('termInsurance')?.dirty || form.get('termInsurance')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('termInsurance')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Health Insurance Cover</label>
+          <input type="number" formControlName="healthInsurance" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('healthInsurance')?.invalid && (form.get('healthInsurance')?.dirty || form.get('healthInsurance')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('healthInsurance')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Critical Illness Cover</label>
+          <input type="number" formControlName="criticalIllness" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('criticalIllness')?.invalid && (form.get('criticalIllness')?.dirty || form.get('criticalIllness')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('criticalIllness')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Employer Life Cover</label>
+          <input type="number" formControlName="employerLifeCover" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('employerLifeCover')?.invalid && (form.get('employerLifeCover')?.dirty || form.get('employerLifeCover')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('employerLifeCover')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Employer Health Cover</label>
+          <input type="number" formControlName="employerHealthCover" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('employerHealthCover')?.invalid && (form.get('employerHealthCover')?.dirty || form.get('employerHealthCover')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('employerHealthCover')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Home Insurance Cover</label>
+          <input type="number" formControlName="homeInsurance" placeholder="₹ Enter amount" required />
+          <div *ngIf="form.get('homeInsurance')?.invalid && (form.get('homeInsurance')?.dirty || form.get('homeInsurance')?.touched)" class="error-message" style="color: #F04A27;">
+            <div *ngIf="form.get('homeInsurance')?.errors?.['required']">This field cannot be empty</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Check My Wealth Score</button>
+    </form>
+    <ng-container *ngIf="result as r">
+      <app-score-result
+        [score]="$any(r).score"
+        [domainScores]="$any(r).domainScores"
+        [recommendations]="$any(r).recommendations"
+      ></app-score-result>
+    </ng-container>
+  </div>
+</div>

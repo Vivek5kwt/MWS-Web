@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+:root {
+  --bg-primary: #0e0e0e;
+  --bg-card: #181818;
+  --bg-card-alt: #1e1e1e;
+  --border: #2a2a2a;
+  --text-primary: #f0f0f0;
+  --text-secondary: #888;
+  --text-muted: #4a4a4a;
+  --gold: #c9a84c;
+  --teal: #4db8b0;
+  --blue: #4a9eff;
+  --red: #e05c5c;
+  --orange: #e87c3e;
+  --green: #4caf82;
+  --gradient-btn: linear-gradient(90deg, #b8902a 0%, #4db8b0 100%);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg-primary);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* ── Page ── */
+.result-page {
+  background: var(--bg-primary);
+  padding: 56px 16px 80px;
+  min-height: 100vh;
+}
+
+/* ── Score Hero ── */
+.score-number {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(3.5rem, 10vw, 5.5rem);
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -2px;
+  animation: countUp 1s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.8); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.score-label {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+.score-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 14px auto 0;
+}
+
+/* ── Section Titles ── */
+.section-title {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-primary);
+  margin-bottom: 28px;
+}
+
+/* ── Domain Score Cards ── */
+.domain-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 14px;
+  transition: border-color 0.2s;
+}
+
+.domain-card:hover {
+  border-color: #3a3a3a;
+}
+
+.domain-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.domain-info h4 {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.domain-info span {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.domain-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.domain-score {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.domain-score.low    { color: var(--orange); }
+.domain-score.medium { color: var(--gold); }
+.domain-score.high   { color: var(--green); }
+
+.chevron {
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.chevron.open { transform: rotate(180deg); }
+
+.domain-body {
+  padding: 0 22px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+}
+
+.domain-body.open {
+  max-height: 300px;
+  padding: 0 22px 20px;
+}
+
+.domain-body h5 {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.domain-body p {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.domain-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 22px;
+}
+
+/* ── Radar Chart ── */
+.radar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 20px;
+}
+
+.radar-svg {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+}
+
+/* ── Recommendations ── */
+.rec-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  margin-bottom: 14px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.rec-card:hover {
+  transform: translateY(-2px);
+  border-color: #3a3a3a;
+  border-left-color: var(--orange);
+}
+
+.rec-card h4 {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.rec-priority {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--orange);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.rec-card p {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ── Download Button ── */
+.btn-download {
+  width: 100%;
+  max-width: 700px;
+  display: block;
+  margin: 36px auto 0;
+  padding: 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--gradient-btn);
+  color: rgba(255,255,255,0.8);
+  font-family: 'Sora', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.btn-download:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ── Disclaimer ── */
+.disclaimer {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 580px;
+  margin: 22px auto 0;
+}
+
+/* ── Animations ── */
+.fade-in {
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in:nth-child(1) { animation-delay: 0.05s; }
+.fade-in:nth-child(2) { animation-delay: 0.12s; }
+.fade-in:nth-child(3) { animation-delay: 0.19s; }
+.fade-in:nth-child(4) { animation-delay: 0.26s; }

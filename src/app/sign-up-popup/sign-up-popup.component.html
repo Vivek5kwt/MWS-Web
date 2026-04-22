@@ -1,0 +1,104 @@
+<div class="signup-popup-backdrop">
+  <div class="signup-popup-modal">
+    <button class="signup-close-btn" (click)="onClose()" aria-label="Close" style="position:absolute;top:18px;right:18px;background:none;border:none;cursor:pointer;font-size:1.7rem;color:#fff;z-index:10;">
+      &times;
+    </button>
+    <!-- Step 1: Initial options -->
+    <ng-container *ngIf="step === 1">
+        <ng-container *ngIf="mode === 'header'; else journeyPopup">
+          <div class="signup-popup-title">Welcome !</div>
+          <div class="signup-popup-desc">
+            Continue with Google or Email , we'll create your free account if you're new.
+          </div>
+          <button class="signup-google-btn" (click)="onGoogleAuth()">
+            <img src="assets/google-icon.svg" alt="Google" class="google-icon" onerror="this.style.display='none'" />
+            <span *ngIf="false" style="font-size:1.2em;">G</span>
+            Continue with Google
+          </button>
+          <button class="signup-email-btn" (click)="step = 2">Continue with Email</button>
+        </ng-container>
+        <ng-template #journeyPopup>
+          <div class="signup-popup-title">Your Wealth Score is ready !</div>
+          <div class="signup-popup-desc">
+            Unlock your personalized results by creating or logging in<br />
+            your account. It takes less than 20 seconds.
+          </div>
+          <button class="signup-google-btn" (click)="onGoogleAuth()">
+            <img src="assets/google-icon.svg" alt="Google" class="google-icon" />
+            Unlock my score
+          </button>
+          <button class="signup-email-btn" (click)="step = 2">Continue with Email</button>
+          <div class="signup-popup-skip">
+            <a (click)="onSkip()">Skip for now (view summary only)</a>
+          </div>
+        </ng-template>
+    </ng-container>
+
+    <!-- Step 2: Email input (Email.jpg) -->
+    <ng-container *ngIf="step === 2">
+      <div class="signup-email-header">
+        <button class="signup-back-btn" (click)="step = 1" aria-label="Back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="signup-popup-title signup-email-title">Continue with Email</div>
+      <div class="signup-popup-desc signup-email-desc">
+        Log in to see your personalized results. If you're new, we'll<br />
+        create your account automatically in seconds.
+      </div>
+      <div class="signup-email-form">
+        <input class="signup-input signup-email-input" type="email" placeholder="Enter email" [(ngModel)]="email" />
+        <button class="signup-continue-btn signup-email-btn" [disabled]="!email" (click)="onContinueEmail()">
+          Continue
+        </button>
+      </div>
+      <div class="signup-popup-skip signup-email-skip">
+        <a (click)="onSkip()">Skip for now (view summary only)</a>
+      </div>
+    </ng-container>
+
+    <!-- Step 3: Name & phone (Email (1).jpg) -->
+    <ng-container *ngIf="step === 3">
+      <div *ngIf="error" class="signup-error-popup">
+        <div class="signup-error-content">
+          <div class="signup-error-title">Error</div>
+          <div class="signup-error-message">{{ error }}</div>
+          <button class="signup-error-btn" (click)="error = null">Close</button>
+        </div>
+      </div>
+      <div class="signup-popup-title signup-finish-title">Finish setting up your account!</div>
+      <div class="signup-popup-desc signup-finish-desc">
+        Add your name & phone so we can personalize your<br />
+        experience and keep you updated instantly.
+      </div>
+      <div class="signup-finish-form">
+        <div class="signup-label signup-finish-label">Name</div>
+        <input class="signup-input signup-finish-input" type="text" placeholder="Enter your name" [(ngModel)]="name" />
+        <div class="signup-label signup-finish-label">Phone number</div>
+        <div class="signup-phone-row signup-finish-phone-row">
+          <select class="signup-phone-country signup-finish-country" [(ngModel)]="countryCode">
+            <option value="+91">+91</option>
+            <option value="+1">+1</option>
+            <!-- Add more country codes as needed -->
+          </select>
+          <input class="signup-input signup-phone-input signup-finish-phone-input" type="tel" placeholder="Enter number" [(ngModel)]="phone" />
+        </div>
+        <div class="signup-label signup-finish-label">Password</div>
+        <input class="signup-input signup-finish-input" type="password" placeholder="Enter password" [(ngModel)]="password" />
+        <button class="signup-continue-btn signup-finish-btn" [disabled]="!name || !phone || !password" (click)="onUnlockScore()">
+          Unlock my score
+        </button>
+      </div>
+    </ng-container>
+    <div class="signup-popup-bottom">
+      <hr class="signup-popup-divider" />
+      <div class="signup-popup-login-text">
+        Already have an account?
+  <a class="signup-popup-login-link" (click)="showLoginPopupModal = true">Please login</a>
+  <app-login-popup *ngIf="showLoginPopupModal" (close)="showLoginPopupModal = false"></app-login-popup>
+      </div>
+    </div>
+  </div>
+</div>

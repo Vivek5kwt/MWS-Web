@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --bg-primary: #0e0e0e;
+  --bg-card: #1a1a1a;
+  --bg-input: #222222;
+  --bg-input-hover: #2a2a2a;
+  --border-color: #2e2e2e;
+  --border-focus: #4a9eff;
+  --text-primary: #f0f0f0;
+  --text-secondary: #888;
+  --text-muted: #555;
+  --accent-gold: #c9a84c;
+  --accent-teal: #4db8b0;
+  --accent-blue: #4a9eff;
+  --gradient-btn: linear-gradient(90deg, #b8902a 0%, #4db8b0 100%);
+  --progress-fill: #4a9eff;
+  --required-dot: #e05c5c;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* ─── Page Wrapper ─── */
+.wealthscore-page {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  padding: 48px 16px 80px;
+}
+
+/* ─── Hero Text ─── */
+.hero-title {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.hero-title .highlight {
+  color: var(--accent-gold);
+}
+
+.hero-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin-bottom: 28px;
+}
+
+/* ─── Trust Badge ─── */
+.trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  background: transparent;
+  margin-bottom: 44px;
+}
+
+.trust-badge .divider {
+  width: 1px;
+  height: 14px;
+  background: var(--border-color);
+}
+
+/* ─── Progress Bar ─── */
+.progress-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 36px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 3px;
+  background: var(--border-color);
+  border-radius: 99px;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--progress-fill);
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-bubble {
+  position: absolute;
+  top: -22px;
+  transform: translateX(-50%);
+  background: var(--accent-blue);
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.progress-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--accent-blue);
+}
+
+/* ─── Form Card ─── */
+.form-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+  .form-card {
+    padding: 24px 18px;
+  }
+}
+
+.form-section-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 28px;
+}
+
+/* ─── Form Controls ─── */
+.field-label {
+  display: block;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.required-star {
+  color: var(--required-dot);
+  margin-left: 3px;
+}
+
+.field-input,
+.field-select {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field-input::placeholder {
+  color: var(--text-muted);
+}
+
+.field-input:hover,
+.field-select:hover {
+  background: var(--bg-input-hover);
+}
+
+.field-input:focus,
+.field-select:focus {
+  border-color: var(--border-focus);
+  background: var(--bg-input-hover);
+}
+
+.field-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.field-select option {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* ─── Currency Input ─── */
+.currency-input-group {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.currency-input-group:focus-within {
+  border-color: var(--border-focus);
+}
+
+.currency-prefix {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-right: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  gap: 4px;
+  background: transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.currency-prefix svg {
+  width: 10px;
+  height: 10px;
+  margin-left: 2px;
+}
+
+.currency-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  padding: 13px 16px;
+  outline: none;
+}
+
+.currency-field::placeholder {
+  color: var(--text-muted);
+}
+
+/* ─── Form Row Spacing ─── */
+.form-row {
+  margin-bottom: 22px;
+}
+
+/* ─── Next Button ─── */
+.btn-next {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--gradient-btn);
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Sora', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.btn-next:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-next:active {
+  transform: translateY(0);
+}

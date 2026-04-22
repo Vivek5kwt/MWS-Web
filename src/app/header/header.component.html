@@ -1,0 +1,57 @@
+<div class="container header w-full flex justify-between items-center">
+  <!-- Left side: Logo -->
+  <div class="logo">
+    <p routerLink="/home" class="cursor-pointer">
+      MyWealthScore<span class="gradient-text">.ai</span>
+    </p>
+  </div>
+
+  <!-- Right side: Navigation links and button -->
+  <div class="navigation flex items-center desktop-nav">
+    <p [ngClass]="{'active': url == '/vision'}" (click)="scrollToSection('vision')">Vision</p>
+    <p [ngClass]="{'active': url == '/four-pillars'}" (click)="scrollToSection('four-pillars')">Four Pillars</p>
+    <p [ngClass]="{'active': url == '/ai-intelligence'}" (click)="scrollToSection('ai-intelligence')">AI Intelligence</p>
+  <ng-container *ngIf="!isLoggedIn">
+    <button class="btn btn-primary" (click)="openSignUpPopup()">Sign up</button>
+    <app-sign-up-popup *ngIf="showSignUpPopup" mode="header" (close)="closeSignUpPopup()" (skip)="closeSignUpPopup()"></app-sign-up-popup>
+  </ng-container>
+  <ng-container *ngIf="isLoggedIn">
+    <div class="profile-circle" (click)="onProfileClick()">
+      <span>{{ getInitial() }}</span>
+    </div>
+    <div class="profile-menu" *ngIf="showProfileMenu">
+      <div class="profile-name">{{ userName }}</div>
+      <div class="profile-email">{{ userEmail }}</div>
+      <button class="btn btn-primary" (click)="logout()">Logout</button>
+    </div>
+  </ng-container>
+  </div>
+
+  <!-- Hamburger Menu -->
+  <button class="hamburger-menu" [class.open]="isMenuOpen" (click)="toggleMenu()" aria-label="Open navigation menu" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav" *ngIf="isMenuOpen">
+    <p [ngClass]="{'active': url == '/vision'}" (click)="scrollToSection('vision'); toggleMenu()">Vision</p>
+    <p [ngClass]="{'active': url == '/four-pillars'}" (click)="scrollToSection('four-pillars'); toggleMenu()">Four Pillars</p>
+    <p [ngClass]="{'active': url == '/ai-intelligence'}" (click)="scrollToSection('ai-intelligence'); toggleMenu()">AI Intelligence</p>
+    
+    <ng-container *ngIf="!isLoggedIn">
+      <button class="btn btn-primary" (click)="openSignUpPopup(); toggleMenu()">Sign up</button>
+    </ng-container>
+    
+    <ng-container *ngIf="isLoggedIn">
+      <div class="mobile-profile-info">
+        <div class="mobile-profile-name">{{ userName }}</div>
+        <div class="mobile-profile-email">{{ userEmail }}</div>
+        <button class="btn btn-primary" (click)="logout(); toggleMenu()">Logout</button>
+      </div>
+    </ng-container>
+    
+    <app-sign-up-popup *ngIf="showSignUpPopup" mode="header" (close)="closeSignUpPopup()" (skip)="closeSignUpPopup()"></app-sign-up-popup>
+  </div>
+</div>

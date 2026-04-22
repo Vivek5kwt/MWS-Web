@@ -1,0 +1,21 @@
+<div class="login-popup-backdrop">
+  <div class="login-popup-modal">
+    <button class="login-close-btn" (click)="onClose()" aria-label="Close" style="position:absolute;top:18px;right:18px;background:none;border:none;cursor:pointer;font-size:1.7rem;color:#fff;z-index:10;">&times;</button>
+      <div *ngIf="error" class="error-message" style="background: #ff4444; color: white; padding: 12px; border-radius: 8px; margin-bottom: 16px; text-align: center;">{{ error }}</div>
+  
+  <div class="login-popup-title">Login to your account</div>
+    <div class="login-popup-desc">Enter your email and password to access your personalized Wealth Score.</div>
+    <form class="login-form" (ngSubmit)="onLogin()">
+      <input class="login-input" type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+      <input class="login-input" type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+      <button class="login-btn" type="submit" [disabled]="!email || !password">Login</button>
+    </form>
+    <div class="login-popup-bottom">
+      <hr class="login-popup-divider" />
+      <div class="login-popup-signup-text">
+        Don't have an account?
+        <a class="login-popup-signup-link" (click)="onShowSignUp()">Sign up</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="score-result-wrapper">
+  <div class="score-card-gradient-border">
+    <div class="score-card">
+      <div class="score-title">Your Wealth Score is</div>
+      <div class="score-value">{{ score }}</div>
+      <div class="score-status">Concerning Financial Health</div>
+      <div class="score-description">
+        Your financial health is concerning with critical issues that need immediate attention.<br />
+        Several aspects of your finances require significant improvement. Focus first on stabilizing your situation by addressing the most pressing vulnerabilities.
+      </div>
+    </div>
+  </div>
+
+  <div class="domain-section">
+    <div class="domain-title">Your Domain Scores</div>
+    <div class="domain-list">
+      <div
+        class="domain-item"
+        *ngFor="let domain of domainScores; let i = index"
+        [class.open]="openDomainIndex === i"
+        (click)="toggleDomain(i)"
+        style="cursor:pointer;"
+      >
+        <div class="domain-header">
+          <div>
+            <div class="domain-name">{{ domain.name }}</div>
+            <div class="domain-percentage">{{ domain.percent }} of Total Score</div>
+          </div>
+          <div class="domain-value">
+            {{ domain.value }}
+            <span class="domain-arrow">
+              <ng-container *ngIf="openDomainIndex === i">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 24L20 14L30 24" stroke="url(#arrowGradientUp)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <defs>
+                    <linearGradient id="arrowGradientUp" x1="10" y1="14" x2="30" y2="24" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#ffb347"/>
+                      <stop offset="0.5" stop-color="#00c6ff"/>
+                      <stop offset="1" stop-color="#43e97b"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </ng-container>
+              <ng-container *ngIf="openDomainIndex !== i">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 16L20 26L30 16" stroke="url(#arrowGradientDown)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <defs>
+                    <linearGradient id="arrowGradientDown" x1="10" y1="16" x2="30" y2="26" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#ffb347"/>
+                      <stop offset="0.5" stop-color="#00c6ff"/>
+                      <stop offset="1" stop-color="#43e97b"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </ng-container>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="openDomainIndex === i">
+          <ng-container *ngIf="domain.summary; else showDescription">
+            <div class="domain-summary"><b>{{ domain.summary }}</b></div>
+          </ng-container>
+          <ng-template #showDescription>
+            <div class="domain-description" *ngIf="domain.description">{{ domain.description }}</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="visualization-section">
+    <div class="visualization-title">Score Visualization</div>
+    <div class="radar-chart-container">
+      <apx-chart
+        [series]="chartOptions.series || []"
+        [chart]="chartOptions.chart || { type: 'radar', height: 350 }"
+        [xaxis]="chartOptions.xaxis || {}"
+        [yaxis]="chartOptions.yaxis || {}"
+        [stroke]="chartOptions.stroke || {}"
+        [markers]="chartOptions.markers || {}"
+        [fill]="chartOptions.fill || {}"
+        [theme]="chartOptions.theme || {}"
+        [dataLabels]="chartOptions.dataLabels || {}"
+        [title]="chartOptions.title || {}">
+      </apx-chart>
+    </div>
+  </div>
+
+  <div class="recommendations-section">
+    <div class="recommendations-title">Recommendations</div>
+    <div class="recommendation-list">
+      <div class="recommendation-item" *ngFor="let rec of recommendations">
+        <div class="recommendation-title">{{ rec.title }}</div>
+        <div class="recommendation-priority">Priority: {{ rec.priority }}</div>
+        <div class="recommendation-description">{{ rec.description }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="download-section">
+    <button class="download-btn" (click)="downloadReport()">Download Report</button>
+  </div>
+
+  <div class="disclaimer">
+    Disclaimer: This wealth score is for informational purposes only and should not be considered as financial advice. Please consult with a qualified financial advisor before making any financial decisions.
+  </div>
+
+  <app-sign-up-popup *ngIf="showSignUpPopup" (close)="showSignUpPopup = false" (skip)="showSignUpPopup = false"></app-sign-up-popup>
+</div>

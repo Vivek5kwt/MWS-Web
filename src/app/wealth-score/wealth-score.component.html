@@ -1,0 +1,339 @@
+<div class="wealth-score-wrapper row">
+  <div class="content col-7 flex-center">
+    <div class="continer p-0 scroll-animate-stagger" style="width: fit-content; margin-left: 45px;">
+      <h1 class="gradient-text">
+        <span>Transform Your Financial Future with</span>
+        <br />
+        <span>India's Most Intelligent Wealth Score</span>
+      </h1>
+      <p>
+        Get your complete financial health report in just 2 minutes! Our advanced AI analyzes your savings, investments, loans, and insurance to give you a personalized Wealth Score with expert recommendations completely FREE.
+      </p>
+      <div class="buttons">
+        <button class="primary-btn" type="button" (click)="onBeginJourney()">Check My Wealth Score</button>
+        <button class="outline-btn" (click)="scrollToBeyondScore()">See How It Works</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content col-5 score-col">
+    <div class="container score-card scroll-animate score-card-pos">
+      <h2>Wealth Score</h2>
+      <div
+        class="progress-circle main-score"
+        [attr.data-value]="score"
+        [ngClass]="score >= 60 ? 'blue' : 'orange'"
+      >
+        <span>{{ score }}</span>
+      </div>
+      <div class="status-text">CONCERNING FINANCIAL HEALTH</div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="progress-circle orange" data-value="25">
+            <span>25</span>
+          </div>
+          <div>Liquidity</div>
+        </div>
+        <div class="metric">
+          <div class="progress-circle orange" data-value="45">
+            <span>45</span>
+          </div>
+          <div>Investments</div>
+        </div>
+        <div class="metric">
+          <div class="progress-circle blue" data-value="75">
+            <span>75</span>
+          </div>
+          <div>Debt</div>
+        </div>
+        <div class="metric">
+          <div class="progress-circle blue" data-value="85">
+            <span>85</span>
+          </div>
+          <div>Insurance</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- -------------------------------------------------------------------------- -->
+
+<!-- Financial Crisis Section -->
+<div id="vision" class="financial-crisis-section scroll-animate">
+  <h2 class="title gradient-text">The Financial Planning Crisis in India</h2>
+  <p class="description">
+    Most Indians are navigating their financial journey without proper 
+    <br>guidance.Traditional financial advisors are expensive and often <br>
+    pushproducts for commissions.The real challenge isn't lack of <br>
+     money, it's lack of personalized, unbiased financial guidance.
+  </p>
+
+  <div class="stats-grid scroll-animate-stagger">
+    <div class="stat-card">
+      <div class="icon">%</div>
+      <div class="stat-text">
+        <strong>27%</strong>
+        <span>Indians are financially literate</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="icon">🏦</div>
+      <div class="stat-text">
+        <strong>68%</strong>
+        <span>Depend solely on traditional savings</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="icon">📈</div>
+      <div class="stat-text">
+        <strong>85%</strong>
+        <span>Don't invest in equity markets</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="icon">₹</div>
+      <div class="stat-text">
+        <strong>30%</strong>
+        <span>Saves more but invests poorly</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="icon">🛡️</div>
+      <div class="stat-text">
+        <strong>87%</strong>
+        <span>Lack adequate life insurance coverage</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ---------------------------------------------------- ------------------ -->
+
+<div id="four-pillars" class="critical-areas-section scroll-animate">
+  <h2 class="gradient-text title">Your Financial Health Depends on Four Critical Areas</h2>
+  <p class="description">
+    Our AI analyzes every aspect of your financial life across four fundamental domains that matter most to Indian families.
+    Like the pillars of a strong foundation, weakness in any area can affect your entire financial stability.
+  </p>
+
+  <div class="areas-grid scroll-animate-stagger">
+    <div class="area-card">
+      <div class="area-icon gradient-circle">₹</div>
+      <div class="area-content">
+        <h3>LIQUIDITY</h3>
+        <p class="subtitle">Emergency Fund & Cash Flow</p>
+        <p>
+          Your liquidity score measures your ability to handle financial emergencies.
+          Our AI evaluates your emergency fund and monthly cash flow to ensure you’re
+          prepared for medical emergencies, job loss, or family needs.
+        </p>
+      </div>
+    </div>
+
+    <div class="area-card">
+      <div class="area-icon gradient-circle">🌱</div>
+      <div class="area-content">
+        <h3>INVESTMENTS</h3>
+        <p class="subtitle">Wealth Building & Growth</p>
+        <p>
+          Your investment score reveals how effectively you're building wealth.
+          Our AI examines your portfolio across SIPs, ELSS, PPF, and other Indian investment options
+          to optimize tax benefits and long-term wealth creation.
+        </p>
+      </div>
+    </div>
+
+    <div class="area-card">
+      <div class="area-icon gradient-circle">🏠</div>
+      <div class="area-content">
+        <h3>DEBT</h3>
+        <p class="subtitle">Smart Borrowing Management</p>
+        <p>
+          Your debt score measures how well you’re managing loans and credit.
+          Our AI evaluates home loans, personal loans, and credit cards to accelerate
+          your journey to financial freedom while maximizing tax benefits.
+        </p>
+      </div>
+    </div>
+
+    <div class="area-card">
+      <div class="area-icon gradient-circle">🛡️</div>
+      <div class="area-content">
+        <h3>INSURANCE</h3>
+        <p class="subtitle">Family Protection & Security</p>
+        <p>
+          Your insurance score assesses how well your family is protected against uncertainties.
+          Our AI reviews term insurance, health insurance, and coverage gaps to ensure your family's financial security.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- -------------------------------------------------------------------------------------- -->
+<div id="ai-intelligence" class="steps-section scroll-animate">
+  <h2 class="title gradient-text">Get Your Personalized Wealth Score in 3 Simple Steps</h2>
+  <div class="steps-grid">
+    
+    <!-- Step 1 -->
+    <div class="step-card">
+      <div class="step-number gradient-badge">1</div>
+      <h3>Share Your Financial Details Safely</h3>
+      <p>
+        Securely share your financial details — salary, expenses, loans, and insurance. Our AI uses bank-level security to protect your data.
+      </p>
+    </div>
+
+    <!-- Line between 1 and 2 -->
+    <div class="step-line"></div>
+
+    <!-- Step 2 -->
+    <div class="step-card">
+      <div class="step-number gradient-badge">2</div>
+      <h3>AI Processing for Indian Markets</h3>
+      <p>
+        Our AI analyzes your data using Indian tax laws and financial regulations. It evaluates over 500+ products across all wealth areas.
+      </p>
+    </div>
+
+    <!-- Line between 2 and 3 -->
+    <div class="step-line"></div>
+
+    <!-- Step 3 -->
+    <div class="step-card">
+      <div class="step-number gradient-badge">3</div>
+      <h3>Receive Your Wealth Score & Recommendations</h3>
+      <p>
+        Get your score with personalized recommendations for tax savings, smart investments, and family financial protection.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- -------------------------------------------------------------------------- -->
+
+
+<div class="transformation-section scroll-animate">
+  <div class="container">
+    <!-- Centered Heading -->
+    <h2 class="gradient-text text-center" style="margin-bottom: 32px;">
+      Start Your Financial Transformation Today
+    </h2>
+    <div class="row align-items-center gx-5">
+      <!-- Left Image -->
+      <div class="col-md-6">
+        <img src="assets/images/financial-transformation.png" alt="Financial Transformation" class="img-fluid rounded-image" />
+      </div>
+      <!-- Right Content -->
+      <div class="col-md-6 content-block">
+        <p class="description">
+          Stop worrying about your financial future. In just 2 minutes, get a complete picture of your financial health with personalized recommendations for Indian financial products and tax optimization.
+        </p>
+        <ul class="feature-list">
+          <li><i class="bi bi-cloud-download"></i> FREE Wealth Score Analysis</li>
+          <li><i class="bi bi-cpu"></i> AI Recommendations for Indian Products</li>
+          <li><i class="bi bi-bar-chart"></i> Tax Optimization Strategies</li>
+          <li><i class="bi bi-x-circle"></i> No Hidden Charges</li>
+          <li><i class="bi bi-shield-lock"></i> RBI Compliant Security</li>
+        </ul>
+        <div class="buttons">
+          <button class="primary-btn">Check My Wealth Score – FREE</button>
+          <button class="outline-btn" (click)="scrollToBeyondScore()">See Sample Report</button>
+        </div>
+        <div class="sub-text">Join 1,00,000+ Indians who improved their financial health</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ----------------------------------------------------------------------------- -->
+<div class="beyond-score-section">
+  <h2 class="title scroll-animate">
+    <span class="gradient-text">Beyond the Score</span>
+  </h2>
+  <p class="subtitle scroll-animate">
+    Your Wealth Score is just the beginning. True financial ascension requires comprehensive mastery.
+  </p>
+
+  <!-- ✅ Add template reference #carousel -->
+  <div class="carousel-wrapper scroll-animate-stagger" #carousel>
+    <div class="card">
+      <img src="assets/images/score1.png" alt="Wealth Score" />
+      <div class="card-content">
+        <h5>Goal Planning</h5>
+        <p>Transform aspirations into mathematically precise roadmaps.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="assets/images/score2.png" alt="Liquidity Optimization" />
+      <div class="card-content">
+        <h5>Liquidity Optimization</h5>
+        <p>Every rupee positioned for maximum strategic advantage.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="assets/images/score3.png" alt="Investment Mastery" />
+      <div class="card-content">
+        <h5>Investment Mastery</h5>
+        <p>AI-driven allocation that adapts to market evolution.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="assets/images/score1.png" alt="Loan Strategy" />
+      <div class="card-content">
+        <h5>Loan Strategy</h5>
+        <p>Converting borrowed capital into acceleration tools.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="assets/images/score1.png" alt="Wealth Score" />
+      <div class="card-content">
+        <h5>Goal Planning</h5>
+        <p>Transform aspirations into mathematically precise roadmaps.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="assets/images/score2.png" alt="Liquidity Optimization" />
+      <div class="card-content">
+        <h5>Liquidity Optimization</h5>
+        <p>Every rupee positioned for maximum strategic advantage.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="assets/images/score3.png" alt="Investment Mastery" />
+      <div class="card-content">
+        <h5>Investment Mastery</h5>
+        <p>AI-driven allocation that adapts to market evolution.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="assets/images/score1.png" alt="Loan Strategy" />
+      <div class="card-content">
+        <h5>Loan Strategy</h5>
+        <p>Converting borrowed capital into acceleration tools.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="carousel-controls">
+    <button class="control" (click)="scrollCarousel('left')">&lt;</button>
+    <button class="control" (click)="scrollCarousel('right')">&gt;</button>
+  </div>
+</div>
+
+
+<!-- ----------------------------------------------------------------------------- -->
