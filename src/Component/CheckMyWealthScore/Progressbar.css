@@ -1,0 +1,153 @@
+.progress-bar-wrapper {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.steps-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  gap: 0;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  cursor: default;
+}
+
+.step-icon-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.step-connector {
+  flex: 1;
+  height: 3px;
+  background: #2a3a4a;
+  transition: background 0.4s ease;
+  position: relative;
+  top: 0;
+}
+
+.step-connector.completed {
+  background: linear-gradient(90deg, #00c6ff, #00e5b0);
+}
+
+.step-connector.left {
+  order: 0;
+}
+
+.step-connector.right {
+  order: 2;
+}
+
+.step-circle-wrap {
+  order: 1;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.4s ease;
+  border: 2px solid transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.step-circle.inactive {
+  background: #1e2d3d;
+  color: #5a7a95;
+  border-color: #2a3a4a;
+}
+
+.step-circle.active {
+  background: linear-gradient(135deg, #00c6ff, #00e5b0);
+  color: #0a0f1a;
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
+}
+
+.step-circle.completed {
+  background: linear-gradient(135deg, #00c6ff, #00e5b0);
+  color: #0a0f1a;
+  border-color: transparent;
+  box-shadow: 0 0 15px rgba(0, 229, 176, 0.4);
+}
+
+.step-label {
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 90px;
+  transition: color 0.3s ease;
+}
+
+.step-label.inactive {
+  color: #5a7a95;
+}
+
+.step-label.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.step-label.completed {
+  color: #00e5b0;
+  font-weight: 500;
+}
+
+.checkmark-icon {
+  font-size: 1.2rem;
+}
+
+/* Overall progress line below steps */
+.progress-line-bar {
+  width: 100%;
+  height: 3px;
+  background: #1e2d3d;
+  border-radius: 2px;
+  margin-top: 1.2rem;
+  overflow: hidden;
+}
+
+.progress-line-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00c6ff, #00e5b0);
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 576px) {
+  .step-circle {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+
+  .step-label {
+    font-size: 0.65rem;
+    max-width: 60px;
+  }
+
+  .checkmark-icon {
+    font-size: 1rem;
+  }
+}

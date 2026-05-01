@@ -1,0 +1,815 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+/* ── Scroll Animations ── */
+@keyframes fadeSlideUp {
+  0%   { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+.scroll-animate.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-animate-stagger > * {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+.scroll-animate-stagger.animate-in > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.scroll-animate-stagger.animate-in > *:nth-child(1) { transition-delay: 0.1s; }
+.scroll-animate-stagger.animate-in > *:nth-child(2) { transition-delay: 0.2s; }
+.scroll-animate-stagger.animate-in > *:nth-child(3) { transition-delay: 0.3s; }
+.scroll-animate-stagger.animate-in > *:nth-child(4) { transition-delay: 0.4s; }
+.scroll-animate-stagger.animate-in > *:nth-child(5) { transition-delay: 0.5s; }
+
+/* ── Shared Helpers ── */
+.gradient-text {
+  background: linear-gradient(90deg, #D98E24, #11CED4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.gradient-circle {
+  background: linear-gradient(135deg, #fcd34d, #00ffd1);
+}
+
+/* ════════════════════════════════════════
+   HERO SECTION
+════════════════════════════════════════ */
+.wealth-score-wrapper {
+  display: flex;
+  justify-content: space-between;
+      padding: 70px 2rem;
+  background-color: #0F0F0F;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+.wealth-score-wrapper .content {
+  padding-right: 0;
+  height: auto;
+}
+
+.wealth-score-wrapper .content h1 {
+  font-size: clamp(1.4rem, 3vw, 40px);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.wealth-score-wrapper .content p {
+  margin: 1rem 0;
+  line-height: 2;
+  color: #ccc;
+  font-size: clamp(0.95rem, 1.5vw, 20px);
+  font-weight: 100;
+  margin-top: 20px;
+}
+
+.wealth-score-wrapper .content .buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wealth-score-wrapper .content .buttons .primary-btn,
+.wealth-score-wrapper .content .buttons .outline-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+}
+
+.wealth-score-wrapper .content .buttons .primary-btn {
+  background: linear-gradient(to right, #fca311, #2af598);
+  color: white;
+  opacity: 75%;
+}
+
+.wealth-score-wrapper .content .buttons .outline-btn {
+  background: transparent;
+  border: 1px solid #2af598;
+  color: white;
+}
+
+/* Score card */
+.wealth-score-wrapper .score-card {
+  width: 100%;
+  max-width: 500px;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.wealth-score-wrapper .score-card h2 {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+.wealth-score-wrapper .score-card .status-text {
+  margin: 1rem 0;
+  color: #b1ff7c;
+  font-weight: 600;
+  font-size: clamp(0.7rem, 1.2vw, 0.95rem);
+  text-align: center;
+}
+
+.wealth-score-wrapper .score-card .metrics {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wealth-score-wrapper .score-card .metrics .metric {
+  text-align: center;
+  font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+}
+
+/* Progress circles */
+.wealth-score-wrapper .progress-circle {
+  --value: 0;
+  --main: #fca311;
+  --bg: #222;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 auto 8px auto;
+  background: conic-gradient(var(--main) calc(var(--value) * 1%), var(--bg) 0);
+  color: var(--main);
+  position: relative;
+  transition: background 0.3s;
+}
+
+.wealth-score-wrapper .progress-circle span {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #181818;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: var(--main);
+  z-index: 1;
+}
+
+.wealth-score-wrapper .progress-circle.orange { --main: #fca311; }
+.wealth-score-wrapper .progress-circle.blue   { --main: #11CED4; }
+
+.wealth-score-wrapper .progress-circle.main-score {
+  --start: #E2B826;
+  --end: #CD4326;
+  --empty: #2E2F34;
+  width: clamp(80px, 12vw, 110px);
+  height: clamp(80px, 12vw, 110px);
+  background: conic-gradient(
+    from 0deg,
+    var(--start) 0%,
+    var(--end) calc(var(--value) * 1%),
+    var(--empty) calc(var(--value) * 1% + 0.5%),
+    var(--empty) 100%
+  );
+}
+
+.wealth-score-wrapper .progress-circle.main-score span {
+  width: calc(clamp(80px, 12vw, 110px) - 14px);
+  height: calc(clamp(80px, 12vw, 110px) - 14px);
+  font-size: clamp(24px, 4vw, 36px);
+  color: #E2B826;
+}
+
+/* ════════════════════════════════════════
+   FINANCIAL CRISIS SECTION
+════════════════════════════════════════ */
+.financial-crisis-section {
+  text-align: center;
+  color: #eaeaea;
+  background-color: #1B1B1B;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.financial-crisis-section .title {
+  font-size: clamp(1.3rem, 3vw, 40px);
+  font-weight: 300;
+  margin-bottom: 25px;
+  margin-top: 20px;
+}
+
+.financial-crisis-section .description {
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  font-size: clamp(0.95rem, 1.5vw, 20px);
+  line-height: 1.6;
+  color: #bdbdbd;
+}
+
+.financial-crisis-section .stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 35px;
+  width: 100%;
+}
+
+.financial-crisis-section .stats-grid .stat-card {
+  background-color: #111;
+  border-radius: 12px;
+  padding: 20px;
+  width: clamp(260px, 30vw, 350px);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.financial-crisis-section .stats-grid .stat-card:hover {
+  transform: translateY(-5px) scale(1.03);
+}
+
+.financial-crisis-section .stats-grid .stat-card .icon {
+  font-size: 28px;
+  color: #11CED4;
+  background: #232323;
+  border-radius: 30%;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.financial-crisis-section .stats-grid .stat-card .stat-text {
+  text-align: left;
+}
+
+.financial-crisis-section .stats-grid .stat-card .stat-text strong {
+  font-size: clamp(1rem, 1.5vw, 20px);
+  color: #fff;
+  display: block;
+}
+
+.financial-crisis-section .stats-grid .stat-card .stat-text span {
+  display: block;
+  font-size: clamp(0.8rem, 1.1vw, 14px);
+  color: #ccc;
+}
+
+/* ════════════════════════════════════════
+   FOUR PILLARS SECTION
+════════════════════════════════════════ */
+.critical-areas-section {
+  margin: 0px auto;
+  text-align: center;
+  color: #eaeaea;
+  padding: 60px 20px;
+  background-color: #0F0F0F;
+}
+
+.critical-areas-section .title {
+  font-size: clamp(1.3rem, 3vw, 40px);
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+
+.critical-areas-section .description {
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+  font-size: clamp(0.95rem, 1.5vw, 20px);
+  color: #bdbdbd;
+  line-height: 1.6;
+}
+
+.critical-areas-section .areas-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.critical-areas-section .areas-grid .area-card {
+  position: relative;
+  background: #1B1B1B;
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  width: clamp(280px, 45vw, 625px);
+  gap: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  text-align: left;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 50px;
+}
+
+.critical-areas-section .areas-grid .area-card:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.critical-areas-section .areas-grid .area-card .area-icon {
+  position: absolute;
+  top: -24px;
+  left: 32px;
+  width: 48px;
+  height: 48px;
+  font-size: 28px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(to top, #fcd34d 0%, #00ffd1 100%);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  z-index: 2;
+  opacity: 75%;
+}
+
+.critical-areas-section .areas-grid .area-card .area-content h3 {
+  font-size: clamp(1rem, 1.8vw, 23px);
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #fffcf2;
+  margin-top: 15px;
+}
+
+.critical-areas-section .areas-grid .area-card .area-content .subtitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: #11CED4;
+  margin-bottom: 8px;
+}
+
+.critical-areas-section .areas-grid .area-card .area-content p {
+  font-size: clamp(0.8rem, 1.1vw, 14px);
+  color: #ccc;
+}
+
+/* ════════════════════════════════════════
+   STEPS SECTION
+════════════════════════════════════════ */
+.steps-section {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: #1B1B1B;
+  color: #fff;
+}
+
+.steps-section .title {
+  font-size: clamp(1.3rem, 3vw, 40px);
+  font-weight: 300;
+  margin-bottom: 48px;
+}
+
+.steps-section .steps-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.steps-section .steps-grid .step-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, #D98E24, #11CED4);
+}
+
+.steps-section .step-card {
+  background: #252525;
+  border-radius: 16px;
+  padding: 36px 24px;
+  width: clamp(220px, 28vw, 300px);
+  transition: transform 0.3s ease;
+}
+
+.steps-section .step-card:hover {
+  transform: translateY(-6px);
+}
+
+.steps-section .step-card h3 {
+  font-size: clamp(0.9rem, 1.3vw, 17px);
+  margin: 20px 0 15px;
+  font-weight: 700;
+}
+
+.steps-section .step-card p {
+  font-size: clamp(0.8rem, 1.1vw, 15px);
+  color: #ccc;
+}
+
+.steps-section .step-card .step-number {
+  font-size: 1.25rem;
+  font-weight: bold;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f3b341, #00c6ff);
+  color: #fff;
+}
+
+/* ════════════════════════════════════════
+   TRANSFORMATION SECTION
+════════════════════════════════════════ */
+.transformation-section {
+  background-color: #111;
+  padding: 80px 20px;
+  color: #fff;
+}
+
+.transformation-section .gradient-text {
+  font-size: clamp(1.3rem, 3vw, 40px);
+  font-weight: 300;
+}
+
+.transformation-section .description {
+  font-size: clamp(0.95rem, 1.5vw, 20px);
+  color: #ccc;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.transformation-section .feature-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.transformation-section .feature-list li {
+  font-size: clamp(0.85rem, 1.2vw, 15px);
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.transformation-section .feature-list li i {
+  font-size: 18px;
+  margin-right: 10px;
+  color: #11CED4;
+}
+
+.transformation-section .buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.transformation-section .buttons .primary-btn {
+  background: linear-gradient(90deg, #f4b440, #00d6c6);
+  border: none;
+  padding: 10px 20px;
+  color: #000;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+}
+
+.transformation-section .buttons .outline-btn {
+  border: 1px solid #00d6c6;
+  background: transparent;
+  padding: 10px 20px;
+  color: #00d6c6;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+}
+
+.transformation-section .sub-text {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.transformation-section .rounded-image {
+  border-radius: 24px;
+  width: 100%;
+  height: auto;
+}
+
+/* ════════════════════════════════════════
+   BEYOND SCORE SECTION
+════════════════════════════════════════ */
+.beyond-score-section {
+  background: #111;
+  color: #ccc;
+  text-align: center;
+  padding: 60px 40px;
+}
+
+.beyond-score-section .title {
+  font-size: clamp(1.3rem, 3vw, 40px);
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.beyond-score-section .subtitle {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  font-size: clamp(0.9rem, 1.3vw, 1rem);
+}
+
+.beyond-score-section .carousel-wrapper {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.beyond-score-section .carousel-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.beyond-score-section .card {
+  background: #1c1c1c;
+  border-radius: 1rem;
+  flex: 0 0 clamp(200px, 22vw, 260px);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: transform 0.3s;
+  border: none;
+}
+
+.beyond-score-section .card:hover {
+  transform: translateY(-5px);
+}
+
+.beyond-score-section .card img {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #333;
+}
+
+.beyond-score-section .card .card-content {
+  padding: 1rem;
+}
+
+.beyond-score-section .card .card-content h5 {
+  color: #fff;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  margin: 0.5rem 0;
+}
+
+.beyond-score-section .card .card-content p {
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  color: #aaa;
+}
+
+.beyond-score-section .carousel-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.beyond-score-section .carousel-controls .control {
+  background: #333;
+  color: #fff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.beyond-score-section .carousel-controls .control:hover {
+  background: #555;
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+════════════════════════════════════════ */
+
+/* ── Large tablets / small desktops (≤1024px) ── */
+@media (max-width: 1024px) {
+  .wealth-score-wrapper .content h1 { font-size: 28px; }
+  .wealth-score-wrapper .content p  { font-size: 16px; }
+  .wealth-score-wrapper .score-card { max-width: 400px; }
+
+  .critical-areas-section .areas-grid .area-card {
+    width: clamp(280px, 80vw, 560px);
+  }
+
+  .steps-section .step-card { width: clamp(200px, 28vw, 260px); }
+}
+
+/* ── Tablets (≤768px) ── */
+@media (max-width: 768px) {
+  .wealth-score-wrapper {
+    flex-direction: column;
+    padding: 1rem 0.75rem;
+    margin-top: 70px;
+  }
+
+  .wealth-score-wrapper .content {
+    width: 100% !important;
+    padding: 0;
+  }
+
+  .wealth-score-wrapper .content .container {
+    margin-left: 0 !important;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wealth-score-wrapper .content h1 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .wealth-score-wrapper .content p {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .wealth-score-wrapper .content .buttons {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .wealth-score-wrapper .content .buttons .primary-btn,
+  .wealth-score-wrapper .content .buttons .outline-btn {
+    width: 90%;
+    margin: 0;
+    font-size: 0.95rem;
+    padding: 0.75rem 0;
+    text-align: center;
+  }
+
+  .wealth-score-wrapper .score-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 24px 0 0 !important;
+    padding: 16px 12px !important;
+  }
+
+  .wealth-score-wrapper .score-card .metrics .metric {
+    font-size: 0.75rem;
+  }
+
+  .financial-crisis-section {
+    padding: 40px 16px;
+  }
+
+  .financial-crisis-section .title       { font-size: 1.3rem; }
+  .financial-crisis-section .description { font-size: 0.95rem; }
+
+  .financial-crisis-section .stats-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .financial-crisis-section .stats-grid .stat-card {
+    width: 95vw;
+    max-width: 380px;
+  }
+
+  .critical-areas-section { margin: 40px auto; }
+  .critical-areas-section .title       { font-size: 1.3rem; }
+  .critical-areas-section .description { font-size: 0.95rem; }
+
+  .critical-areas-section .areas-grid .area-card {
+    width: 90vw;
+    max-width: 500px;
+  }
+
+  .steps-section { padding: 60px 16px; }
+  .steps-section .title { font-size: 1.3rem; }
+
+  .steps-section .steps-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .steps-section .step-card  { width: 90vw; max-width: 400px; }
+  .steps-section .steps-grid .step-line { display: none; }
+
+  .transformation-section { padding: 60px 16px; }
+  .transformation-section .gradient-text { font-size: 1.3rem; }
+  .transformation-section .description   { font-size: 0.95rem; }
+
+  .transformation-section .buttons {
+    flex-direction: column;
+  }
+
+  .transformation-section .buttons .primary-btn,
+  .transformation-section .buttons .outline-btn {
+    width: 100%;
+  }
+
+  .transformation-section img.rounded-image { margin-bottom: 28px; }
+
+  .beyond-score-section { padding: 40px 16px; }
+  .beyond-score-section .title    { font-size: 1.3rem; }
+  .beyond-score-section .subtitle { font-size: 0.9rem; }
+  .beyond-score-section .card     { flex: 0 0 220px; }
+}
+
+/* ── Mobile (≤480px) ── */
+@media (max-width: 480px) {
+  .wealth-score-wrapper { padding: 1rem 0.5rem; }
+  .wealth-score-wrapper .content h1 { font-size: 1.2rem; }
+  .wealth-score-wrapper .content p  { font-size: 0.88rem; }
+  .wealth-score-wrapper .score-card h2 { font-size: 1rem; }
+
+  .wealth-score-wrapper .progress-circle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .wealth-score-wrapper .progress-circle span {
+    width: 37px;
+    height: 37px;
+    font-size: 11px;
+  }
+
+  .wealth-score-wrapper .progress-circle.main-score {
+    width: 80px;
+    height: 80px;
+  }
+
+  .wealth-score-wrapper .progress-circle.main-score span {
+    width: 66px;
+    height: 66px;
+    font-size: 24px;
+  }
+
+  .financial-crisis-section .title { font-size: 1.1rem; }
+  .financial-crisis-section .stats-grid .stat-card { padding: 14px 12px; gap: 10px; }
+
+  .critical-areas-section .areas-grid .area-card { width: 95vw; padding: 16px 14px; }
+  .critical-areas-section .areas-grid .area-card .area-content h3 { font-size: 1rem; }
+
+  .steps-section .title    { font-size: 1.1rem; }
+  .steps-section .step-card { width: 95vw; padding: 28px 18px; }
+
+  .transformation-section .feature-list li { font-size: 0.85rem; }
+  .transformation-section .buttons .primary-btn,
+  .transformation-section .buttons .outline-btn { font-size: 0.85rem; padding: 9px 14px; }
+
+  .beyond-score-section .card { flex: 0 0 180px; }
+}
+
+/* ── Very small screens (≤360px) ── */
+@media (max-width: 360px) {
+  .wealth-score-wrapper .content h1      { font-size: 1rem; }
+  .financial-crisis-section .title       { font-size: 1rem; }
+  .critical-areas-section .title         { font-size: 1rem; }
+  .steps-section .title                  { font-size: 1rem; }
+  .transformation-section .gradient-text { font-size: 1rem; }
+  .beyond-score-section .title           { font-size: 1rem; }
+}

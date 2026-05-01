@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* ── Root Variables ── */
+:root {
+  --nav-bg: #0f0f0f;
+  --nav-link-color: #ffffff;
+  --nav-link-hover: #d98e24;
+  --brand-color: #ffffff;
+  --btn-gradient: linear-gradient(94.31deg, #D98E24 0.91%, #11CED4 99.09%);
+  --font-main: 'Poppins', sans-serif;
+}
+
+/* ── Navbar Base ── */
+.mws-navbar {
+  background-color: var(--nav-bg) !important;
+  padding: 0.75rem 1.5rem;
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.06); */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ── Brand ── */
+.mws-navbar .navbar-brand {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--brand-color) !important;
+  letter-spacing: -0.3px;
+  line-height: 100%;
+  white-space: nowrap;
+  max-width: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mws-navbar .navbar-brand img{
+  width: 100%;
+}
+
+
+.mws-navbar .navbar-brand:hover {
+  color: var(--nav-link-hover) !important;
+  transition: color 0.2s ease;
+}
+
+/* ── Nav Links ── */
+.mws-navbar .nav-link {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  text-align: center;
+  color: var(--nav-link-color) !important;
+  padding: 0.5rem 1.1rem !important;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.mws-navbar .nav-link:hover,
+.mws-navbar .nav-link.active {
+  color: var(--nav-link-hover) !important;
+}
+.wealthscore-main {
+    background-color: #0f0f0f;
+    padding: 15px 49px 15px;
+    position: sticky;
+    top: 0px;
+    z-index: 999;
+}
+
+/* ── CTA Button ── */
+.mws-btn-cta {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  color: #ffffff !important;
+  background: var(--btn-gradient);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mws-btn-cta:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(17, 206, 212, 0.3);
+  color: #ffffff !important;
+}
+
+.mws-btn-cta:active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ── Toggler (hamburger) ── */
+.mws-navbar .navbar-toggler {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+}
+
+.mws-navbar .navbar-toggler:focus {
+  box-shadow: 0 0 0 3px rgba(217, 142, 36, 0.4);
+  outline: none;
+}
+
+/* Custom white hamburger icon */
+.mws-navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255%2C255%2C255%2C0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* ── Collapse Menu ── */
+.mws-navbar .navbar-collapse {
+  align-items: center;
+}
+
+/* ── Nav items spacing ── */
+.mws-navbar .navbar-nav {
+  gap: 0.25rem;
+  margin-left: auto!important;
+  margin-right: 20px;
+}
+
+/* ── Mobile styles ── */
+@media (max-width: 991.98px) {
+  .mws-navbar {
+    padding: 0.75rem 0px;
+  }
+  .wealthscore-main {
+  padding: 0px ;
+}
+
+  .mws-navbar .navbar-collapse {
+    background-color: var(--nav-bg);
+    padding: 1rem 0.5rem 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 0.5rem;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .mws-navbar .nav-link {
+    font-size: 18px;
+    padding: 0.6rem 0.75rem !important;
+    text-align: left;
+    border-radius: 6px;
+  }
+
+  .mws-navbar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .mws-cta-wrapper {
+    padding: 0.5rem 0.75rem 0;
+    width: 100%;
+  }
+
+  .mws-btn-cta {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 22px;
+    border-radius: 8px;
+  }
+}
+
+/* ── Tablet tweaks ── */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .mws-navbar .nav-link {
+    font-size: 17px;
+    padding: 0.5rem 0.8rem !important;
+  }
+}
+
+/* ── Large screens ── */
+@media (min-width: 1200px) {
+  .mws-navbar {
+    padding: 0.85rem 3rem;
+  }
+
+  .mws-navbar .nav-link {
+    font-size:16px;
+  }
+}
