@@ -111,7 +111,8 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp }) => {
     e.preventDefault();
     if (!name || !phone) { setError("All fields are required"); return; }
     setError("");
-    navigate("/dashboard");
+    onClose();
+    navigate("/");
   };
 
   return (

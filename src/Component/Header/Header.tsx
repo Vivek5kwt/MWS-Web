@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../Header/header.css";
 import logo from "../../../public/Images/Logo.png";
-import Login from "../../Component/Signup/LoginPopup"; // ✅ Import Login component
+import Login from "../../Component/Signup/LoginPopup";
+import SignUpPopup from "../../Component/Signup/Signuppopup"; // ✅ import SignUp
 
 interface NavItem {
   label: string;
@@ -16,10 +17,8 @@ const navItems: NavItem[] = [
 ];
 
 const Header: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [showLogin, setShowLogin] = useState<boolean>(false); // ✅ modal state
+  const [activePopup, setActivePopup] = useState<"login" | "signup" | null>(null); // ✅ single state controls both
 
   const toggleNav = () => setIsOpen((prev) => !prev);
   const closeNav = () => setIsOpen(false);
@@ -29,6 +28,7 @@ const Header: React.FC = () => {
       <div className="container-fluid px-0">
         <nav className="navbar navbar-expand-lg mws-navbar">
           <div className="container-fluid">
+
             {/* ── Brand ── */}
             <a className="navbar-brand" href="/">
               <img src={logo} alt="MyWealthScore" />
@@ -67,27 +67,34 @@ const Header: React.FC = () => {
                   className="mws-btn-cta"
                   onClick={() => {
                     closeNav();
-                    setShowLogin(true); // ✅ open modal instead of navigating
+                    setActivePopup("signup"); // ✅ open login popup
                   }}
                 >
                   Begin Journey
                 </button>
               </div>
             </div>
+
           </div>
         </nav>
       </div>
 
-      {/* ✅ Render Login modal conditionally */}
-      {showLogin && (
+      {/* ✅ Login Popup */}
+      {activePopup === "login" && ( 
         <Login
-          onClose={() => setShowLogin(false)}
-          onShowSignUp={() => {
-            setShowLogin(false);
-            navigate("/signup", { state: { backgroundLocation: location } });
-          }}
+          onClose={() => setActivePopup(null)}
+          onShowSignUp={() => setActivePopup("signup")} // ✅ switch to signup
         />
       )}
+
+      {/* ✅ SignUp Popup */}
+      {activePopup === "signup" && (
+        <SignUpPopup
+          onClose={() => setActivePopup(null)}
+          onShowLogin={() => setActivePopup("login")} // ✅ switch back to login
+        />
+      )}
+
     </div>
   );
 };
