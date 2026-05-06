@@ -92,6 +92,26 @@
   cursor: pointer;
 }
 
+.mws-btn-cta-login {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 50% !important;
+  letter-spacing: 0px;
+  color: #ffffff !important;
+  background: var(--btn-gradient);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .mws-btn-cta:hover {
   opacity: 0.9;
   transform: translateY(-1px);

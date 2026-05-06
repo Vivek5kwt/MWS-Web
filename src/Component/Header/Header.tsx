@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/authSlice";
+
 import "../Header/header.css";
 import logo from "../../../public/Images/Logo.png";
 import Login from "../../Component/Signup/LoginPopup";
-import SignUpPopup from "../../Component/Signup/Signuppopup"; // ✅ import SignUp
+import SignUpPopup from "../../Component/Signup/Signuppopup";
 
 interface NavItem {
   label: string;
@@ -17,11 +20,26 @@ const navItems: NavItem[] = [
 ];
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [activePopup, setActivePopup] = useState<"login" | "signup" | null>(null); // ✅ single state controls both
+  const [activePopup, setActivePopup] = useState<"login" | "signup" | null>(null);
+  const [openDropdown, setOpenDropdown] = useState(false);
 
   const toggleNav = () => setIsOpen((prev) => !prev);
   const closeNav = () => setIsOpen(false);
+
+  // 🔥 Redux user
+  const { user } = useSelector((state: any) => state.auth);
+
+  const initial = user?.name?.charAt(0)?.toUpperCase();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setOpenDropdown(false);
+    navigate("/");
+  };
 
   return (
     <div className="wealthscore-main">
@@ -34,7 +52,7 @@ const Header: React.FC = () => {
               <img src={logo} alt="MyWealthScore" />
             </a>
 
-            {/* ── Hamburger Toggler ── */}
+            {/* ── Hamburger ── */}
             <button
               className="navbar-toggler"
               type="button"
@@ -46,7 +64,7 @@ const Header: React.FC = () => {
               <span className="navbar-toggler-icon" />
             </button>
 
-            {/* ── Collapsible Menu ── */}
+            {/* ── Menu ── */}
             <div
               className={`collapse navbar-collapse${isOpen ? " show" : ""}`}
               id="mwsNavbar"
@@ -61,17 +79,59 @@ const Header: React.FC = () => {
                 ))}
               </ul>
 
-              {/* ── CTA Button ── */}
-              <div className="mws-cta-wrapper">
-                <button
-                  className="mws-btn-cta"
-                  onClick={() => {
-                    closeNav();
-                    setActivePopup("signup"); // ✅ open login popup
-                  }}
-                >
-                  Begin Journey
-                </button>
+              {/* ── CTA / USER SECTION ── */}
+              <div className="mws-cta-wrapper" style={{ position: "relative" }}>
+
+                {/* ✅ LOGGED IN */}
+{user ? (
+  <div className="mws-user-wrapper">
+
+    <div className="mws-btn-cta-login">
+      <span className="mws-user-initial">{initial}</span>
+
+      
+    </div>
+    
+    <span
+  className="mws-dropdown-arrow"
+  onClick={() => setOpenDropdown((prev) => !prev)}
+  style={{ marginLeft: "6px", cursor:"pointer" }}
+>
+  <svg
+    className={`arrow-icon ${openDropdown ? "open" : ""}`}
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+</span>
+
+    {openDropdown && (
+      <div className="mws-user-dropdown mt-1">
+        <button onClick={handleLogout} className="p-2">
+          Logout
+        </button>
+      </div>
+    )}
+
+  </div>
+) : (
+  /* ❌ NOT LOGGED IN */
+  <button
+    className="mws-btn-cta"
+    onClick={() => {
+      closeNav();
+      setActivePopup("signup");
+    }}
+  >
+    Begin Journey
+  </button>
+)}
+
               </div>
             </div>
 
@@ -79,22 +139,21 @@ const Header: React.FC = () => {
         </nav>
       </div>
 
-      {/* ✅ Login Popup */}
-      {activePopup === "login" && ( 
+      {/* ── Login Popup ── */}
+      {activePopup === "login" && (
         <Login
           onClose={() => setActivePopup(null)}
-          onShowSignUp={() => setActivePopup("signup")} // ✅ switch to signup
+          onShowSignUp={() => setActivePopup("signup")}
         />
       )}
 
-      {/* ✅ SignUp Popup */}
+      {/* ── Signup Popup ── */}
       {activePopup === "signup" && (
         <SignUpPopup
           onClose={() => setActivePopup(null)}
-          onShowLogin={() => setActivePopup("login")} // ✅ switch back to login
+          onShowLogin={() => setActivePopup("login")}
         />
       )}
-
     </div>
   );
 };
