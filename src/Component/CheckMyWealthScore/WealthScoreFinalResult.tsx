@@ -260,11 +260,22 @@ const DomainCard: React.FC<{ domain: DomainScore }> = ({ domain }) => {
 };
 
 /* ─── Main Component ─── */
-const WealthScoreResult: React.FC = () => {
-  const totalScore = 30;
+const WealthScoreResult: React.FC<{ liquidityScore: number; debtScore: number; insuranceScore: number; investmentScore: number; finalScore: number }> = ({ liquidityScore, debtScore, insuranceScore, investmentScore, finalScore }) => {
+  const totalScore = finalScore;
   const scoreLabel = "Concerning Financial Health";
   const scoreDesc =
     "Your financial health is concerning with critical issues that need immediate attention. Several aspects of your finances require significant improvement. Focus first on stabilizing your situation by addressing the most pressing vulnerabilities.";
+
+  const tier = (score: number): "low" | "medium" | "high" =>
+    score >= 70 ? "high" : score >= 40 ? "medium" : "low";
+
+  const domains = DOMAINS.map((d) => {
+    if (d.id === "liquidity") return { ...d, score: liquidityScore, tier: tier(liquidityScore) };
+    if (d.id === "investment") return { ...d, score: investmentScore, tier: tier(investmentScore) };
+    if (d.id === "debt") return { ...d, score: debtScore, tier: tier(debtScore) };
+    if (d.id === "insurance") return { ...d, score: insuranceScore, tier: tier(insuranceScore) };
+    return d;
+  });
 
   return (
     <div className="result-page">
@@ -283,7 +294,7 @@ const WealthScoreResult: React.FC = () => {
         <div className="row justify-content-center mb-5">
           <div className="col-12 col-md-10 col-lg-8">
             <h2 className="section-title">Your Domain Scores</h2>
-            {DOMAINS.map((d) => (
+            {domains.map((d) => (
               <DomainCard key={d.id} domain={d} />
             ))}
           </div>
@@ -294,7 +305,7 @@ const WealthScoreResult: React.FC = () => {
           <div className="col-12 col-md-10 col-lg-8">
             <h2 className="section-title">Score Visualization</h2>
             <div className="radar-container">
-              <WealthScoreFinalResult domains={DOMAINS} />
+              <WealthScoreFinalResult domains={domains} />
             </div>
           </div>
         </div>
