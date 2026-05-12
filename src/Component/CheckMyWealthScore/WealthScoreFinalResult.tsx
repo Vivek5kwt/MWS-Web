@@ -68,19 +68,25 @@ const DOMAINS: DomainScore[] = [
 
 const RECOMMENDATIONS: Recommendation[] = [
   {
-    title: "Build Emergency Fund",
+    title: "Liquidity Analysis",
     priority: "Priority: High",
     description:
       "Aim to save 3–6 months of expenses in highly liquid accounts for emergencies. Start with a target of saving ₹0.",
   },
   {
-    title: "Start Regular Investment Plan",
+    title: " Investment Analysis",
     priority: "Priority: High",
     description:
       "Begin investing at least 10–15% of your income (₹0/month) regularly through SIPs in diversified mutual funds.",
   },
   {
-    title: "Increase Health Insurance Coverage",
+    title: " Debt Analysis",
+    priority: "Priority: High",
+    description:
+      "Obtain comprehensive health insurance with at least ₹5–10 lakhs coverage per person. Your current coverage averages only ₹0 per person.",
+  },
+  {
+    title: "Insurance Analysis",
     priority: "Priority: High",
     description:
       "Obtain comprehensive health insurance with at least ₹5–10 lakhs coverage per person. Your current coverage averages only ₹0 per person.",
@@ -260,7 +266,22 @@ const DomainCard: React.FC<{ domain: DomainScore }> = ({ domain }) => {
 };
 
 /* ─── Main Component ─── */
-const WealthScoreResult: React.FC<{ liquidityScore: number; debtScore: number; insuranceScore: number; investmentScore: number; finalScore: number }> = ({ liquidityScore, debtScore, insuranceScore, investmentScore, finalScore }) => {
+interface WealthScoreResultProps {
+  liquidityScore: number;
+  debtScore: number;
+  insuranceScore: number;
+  investmentScore: number;
+  finalScore: number;
+  liquidityInterp: string;
+  debtInterp: string;
+  insuranceInterp: string;
+  investmentInterp: string;
+}
+
+const WealthScoreResult: React.FC<WealthScoreResultProps> = ({
+  liquidityScore, debtScore, insuranceScore, investmentScore, finalScore,
+  liquidityInterp, debtInterp, insuranceInterp, investmentInterp,
+}) => {
   const totalScore = finalScore;
   const scoreLabel = "Concerning Financial Health";
   const scoreDesc =
@@ -275,6 +296,14 @@ const WealthScoreResult: React.FC<{ liquidityScore: number; debtScore: number; i
     if (d.id === "debt") return { ...d, score: debtScore, tier: tier(debtScore) };
     if (d.id === "insurance") return { ...d, score: insuranceScore, tier: tier(insuranceScore) };
     return d;
+  });
+
+  const recommendations = RECOMMENDATIONS.map((rec) => {
+    if (rec.title.trim() === "Liquidity Analysis") return { ...rec, description: liquidityInterp || rec.description };
+    if (rec.title.trim() === "Investment Analysis") return { ...rec, description: investmentInterp || rec.description };
+    if (rec.title.trim() === "Debt Analysis") return { ...rec, description: debtInterp || rec.description };
+    if (rec.title.trim() === "Insurance Analysis") return { ...rec, description: insuranceInterp || rec.description };
+    return rec;
   });
 
   return (
@@ -314,7 +343,7 @@ const WealthScoreResult: React.FC<{ liquidityScore: number; debtScore: number; i
         <div className="row justify-content-center mb-4">
           <div className="col-12 col-md-10 col-lg-8">
             <h2 className="section-title">Recommendations</h2>
-            {RECOMMENDATIONS.map((rec, i) => (
+            {recommendations.map((rec, i) => (
               <div className="rec-card fade-in" key={i}>
                 <h4>{rec.title}</h4>
                 <span className="rec-priority">{rec.priority}</span>

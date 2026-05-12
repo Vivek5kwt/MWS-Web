@@ -51,6 +51,10 @@ const CheckMyWealthScore: React.FC = () => {
   const [insuranceScore, setInsuranceScore] = useState(0);
   const [investmentScore, setInvestmentScore] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
+  const [liquidityInterp, setLiquidityInterp] = useState("");
+  const [debtInterp, setDebtInterp] = useState("");
+  const [insuranceInterp, setInsuranceInterp] = useState("");
+  const [investmentInterp, setInvestmentInterp] = useState("");
   const [apiLoading, setApiLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
@@ -243,6 +247,10 @@ if (Number(debt.personalLoanOutstanding) > 0) {
       setInsuranceScore(insResult.insurance_score);
       setInvestmentScore(invResult.investment_score);
       setFinalScore(finResult.final_score);
+      setLiquidityInterp(liqResult.interpretation ?? "");
+      setDebtInterp(debtResult.interpretation ?? "");
+      setInsuranceInterp(insResult.interpretation ?? "");
+      setInvestmentInterp(invResult.interpretation ?? "");
       setSubmitted(true);
     } catch (err) {
       console.error("API call failed:", err);
@@ -281,7 +289,17 @@ if (Number(debt.personalLoanOutstanding) > 0) {
               <p className="mt-3" style={{ color: "#aaa" }}>Calculating your wealth score...</p>
             </div>
           ) : submitted ? (
-            <WealthScoreResult liquidityScore={liquidityScore} debtScore={debtScore} insuranceScore={insuranceScore} investmentScore={investmentScore} finalScore={finalScore} />
+            <WealthScoreResult
+              liquidityScore={liquidityScore}
+              debtScore={debtScore}
+              insuranceScore={insuranceScore}
+              investmentScore={investmentScore}
+              finalScore={finalScore}
+              liquidityInterp={liquidityInterp}
+              debtInterp={debtInterp}
+              insuranceInterp={insuranceInterp}
+              investmentInterp={investmentInterp}
+            />
           ) : (
             <>
               {/* Progress Bar */}
