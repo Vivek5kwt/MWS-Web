@@ -20,7 +20,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ steps, currentStep }) => {
         {steps.map((step, index) => {
           const isCompleted = step.id < currentStep;
           const isActive = step.id === currentStep;
-          const isInactive = step.id > currentStep;
 
           const statusClass = isCompleted
             ? "completed"

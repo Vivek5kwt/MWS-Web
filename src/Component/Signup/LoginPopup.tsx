@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import type { ChangeEvent, FormEvent } from "react";
+import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/authSlice";
@@ -21,7 +21,7 @@ interface DropdownProps {
   onChange: (value: string) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ name, value, options, onChange }) => {
+const Dropdown: React.FC<DropdownProps> = ({ name: _name, value, options, onChange }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -85,7 +85,7 @@ const COUNTRY_OPTIONS = [
 ];
 
 /* ─── Main Component ─── */
-const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp }) => {
+const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) => {
   const navigate = useNavigate();
 
   // 🔥 Redux
@@ -126,7 +126,7 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp }) => {
 
     setError("");
 
-    const result = await dispatch(loginUser({ email, password }) as any);
+    const result = await dispatch((loginUser as any)({ email, password }));
 
     if (result.meta.requestStatus === "fulfilled") {
       toast.success("Login Successfully");

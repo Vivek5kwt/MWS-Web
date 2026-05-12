@@ -267,20 +267,20 @@ const DomainCard: React.FC<{ domain: DomainScore }> = ({ domain }) => {
 
 /* ─── Main Component ─── */
 interface WealthScoreResultProps {
-  liquidityScore: number;
-  debtScore: number;
-  insuranceScore: number;
-  investmentScore: number;
-  finalScore: number;
-  liquidityInterp: string;
-  debtInterp: string;
-  insuranceInterp: string;
-  investmentInterp: string;
+  liquidityScore?: number;
+  debtScore?: number;
+  insuranceScore?: number;
+  investmentScore?: number;
+  finalScore?: number;
+  liquidityInterp?: string;
+  debtInterp?: string;
+  insuranceInterp?: string;
+  investmentInterp?: string;
 }
 
 const WealthScoreResult: React.FC<WealthScoreResultProps> = ({
-  liquidityScore, debtScore, insuranceScore, investmentScore, finalScore,
-  liquidityInterp, debtInterp, insuranceInterp, investmentInterp,
+  liquidityScore = 0, debtScore = 0, insuranceScore = 0, investmentScore = 0, finalScore = 0,
+  liquidityInterp = "", debtInterp = "", insuranceInterp = "", investmentInterp = "",
 }) => {
   const totalScore = finalScore;
   const scoreLabel = "Concerning Financial Health";
