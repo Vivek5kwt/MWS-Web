@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./PersonalInfoForm.css";
+import "./Personalinfoform.css";
 
 interface InvestmentData {
   equityInvestments: string;

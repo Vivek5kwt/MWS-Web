@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./PersonalInfoForm.css";
+import "./Personalinfoform.css";
 
 interface InsuranceData {
   termLifeInsuranceCover: string;
