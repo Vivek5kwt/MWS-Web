@@ -1,5 +1,5 @@
 import React from "react";
-import "./ProgressBar.css";
+import "./Progressbar.css";
 
 interface Step {
   id: number;
