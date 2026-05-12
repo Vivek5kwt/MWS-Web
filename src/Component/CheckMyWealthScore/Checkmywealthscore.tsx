@@ -44,7 +44,7 @@ const mapAverageAnnualReturn = (val: string): number => {
 const CheckMyWealthScore: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
-  const [navOpen, setNavOpen] = useState(false);
+  // const [navOpen, setNavOpen] = useState(false);
   const [allData, setAllData] = useState<Record<string, any>>({});
   const [liquidityScore, setLiquidityScore] = useState(0);
   const [debtScore, setDebtScore] = useState(0);
