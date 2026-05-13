@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../redux/authSlice";
 import "./Signuppopup.css";
 
-const apiUrl = import.meta.env.VITE_API_URL;
 
 type Props = {
   onClose: () => void;
@@ -14,6 +15,7 @@ type Props = {
 type Step = "welcome" | "email" | "details";
 
 const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
+  const dispatch = useDispatch();
   const [step, setStep] = useState<Step>("welcome");
 
   const [email, setEmail] = useState("");
@@ -56,21 +58,21 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
     const toastId = toast.loading("Creating account...");
 
     try {
-      const res = await axios.post(`${apiUrl}/register`, {
+      const res = await axios.post(`/auth-api/api/register`, {
         email,
         name,
         phone_number,
         password,
       });
 
-      toast.success(res.data?.message || "Account created 🎉", {
-        id: toastId,
-      });
+      toast.success(res.data?.message || "Account created!", { id: toastId });
 
-      // slight delay for better UX
-      setTimeout(() => {
+      const result = await dispatch((loginUser as any)({ email, password }));
+      if (result.meta.requestStatus === "fulfilled") {
+        onClose();
+      } else {
         onShowLogin();
-      }, 1500);
+      }
 
     } catch (err: any) {
       const message =

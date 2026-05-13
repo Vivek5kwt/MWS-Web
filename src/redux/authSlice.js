@@ -1,14 +1,12 @@
 // src/redux/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const apiUrl = import.meta.env.VITE_API_URL;
-
 // 🔥 Login API call
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${apiUrl}/login`, userData);
+      const res = await axios.post(`/auth-api/api/login`, userData);
 
       // save to localStorage
       localStorage.setItem("token", res.data.token);

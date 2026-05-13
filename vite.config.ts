@@ -10,6 +10,11 @@ export default defineConfig({
         target: 'http://3.110.223.162:8000',
         changeOrigin: true,
       },
+      '/auth-api': {
+        target: 'http://187.127.142.16:6000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/auth-api/, ''),
+      },
     },
   },
 })
