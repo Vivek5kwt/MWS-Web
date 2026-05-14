@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { loginUser, setCredentials } from "../../redux/authSlice";
 import "./Signuppopup.css";
 
 
@@ -15,7 +13,6 @@ type Props = {
 type Step = "welcome" | "email" | "details";
 
 const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
-  const dispatch = useDispatch();
   const [step, setStep] = useState<Step>("welcome");
 
   const [email, setEmail] = useState("");
@@ -58,7 +55,7 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
     const toastId = toast.loading("Creating account...");
 
    try {
-  const res = await axios.post(`/auth-api/api/register`, {
+  await axios.post(`/auth-api/api/register`, {
     email,
     name,
     phone_number,
