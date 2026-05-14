@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import type { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/authSlice";
 import "./LoginPopup.css";
@@ -86,11 +85,9 @@ const COUNTRY_OPTIONS = [
 
 /* ─── Main Component ─── */
 const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) => {
-  const navigate = useNavigate();
-
   // 🔥 Redux
   const dispatch = useDispatch();
-  const { loading, error: reduxError, token } = useSelector((state: any) => state.auth);
+  const { loading, error: reduxError } = useSelector((state: any) => state.auth);
 
   const [step, setStep] = useState<Step>("welcome");
   const [email, setEmail] = useState("");
@@ -99,14 +96,6 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) =
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
   const [error, setError] = useState("");
-
-  // ✅ Redirect after login
-  useEffect(() => {
-    if (token) {
-      onClose();
-      navigate("/");
-    }
-  }, [token, navigate, onClose]);
 
   const handleEmailContinue = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -130,7 +119,7 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) =
 
     if (result.meta.requestStatus === "fulfilled") {
       toast.success("Login Successfully");
-      setStep("setup"); // or skip if not needed
+      onClose();
     } else {
       setError(result.payload?.message || "Login failed");
     }
@@ -141,7 +130,6 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) =
     if (!name || !phone) { setError("All fields are required"); return; }
     setError("");
     onClose();
-    navigate("/");
   };
 
   return (

@@ -8,11 +8,13 @@ export const loginUser = createAsyncThunk(
     try {
       const res = await axios.post(`/auth-api/api/login`, userData);
 
-      // save to localStorage
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.data));
+      const token = res.data.token;
+      const user = res.data.data || res.data.user || res.data;
 
-      return res.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      return { token, user };
     } catch (err) {
       return rejectWithValue(err.response?.data);
     }
@@ -31,27 +33,25 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
-
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+    },
+    setCredentials: (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
   },
   extraReducers: (builder) => {
     builder
-      // loading
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-
-      // success
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.data;
+        state.user = action.payload.user;
         state.token = action.payload.token;
       })
-
-      // error
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Login failed";
@@ -59,5 +59,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setCredentials } = authSlice.actions;
 export default authSlice.reducer;

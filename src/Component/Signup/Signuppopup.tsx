@@ -3,7 +3,7 @@ import type { ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../redux/authSlice";
+import { loginUser, setCredentials } from "../../redux/authSlice";
 import "./Signuppopup.css";
 
 
@@ -57,32 +57,45 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
 
     const toastId = toast.loading("Creating account...");
 
-    try {
-      const res = await axios.post(`/auth-api/api/register`, {
-        email,
-        name,
-        phone_number,
-        password,
-      });
+   try {
+  const res = await axios.post(`/auth-api/api/register`, {
+    email,
+    name,
+    phone_number,
+    password,
+  });
 
-      toast.success(res.data?.message || "Account created!", { id: toastId });
+  // Try auto login
+  // const result = await dispatch((loginUser as any)({ email, password }));
 
-      const result = await dispatch((loginUser as any)({ email, password }));
-      if (result.meta.requestStatus === "fulfilled") {
-        onClose();
-      } else {
-        onShowLogin();
-      }
+  // if (result.meta.requestStatus === "fulfilled") {
+  //   toast.success("Account created & logged in successfully!", {
+  //     id: toastId,
+  //   });
 
-    } catch (err: any) {
-      const message =
-        err?.response?.data?.message || "Signup failed";
+  //   onClose();
+  // } else {
+  //   toast.success("Account created successfully!", {
+  //     id: toastId,
+  //   });
 
-      setError(message);
+  //   toast.error("Please log in manually.");
+  // }
+  toast.success("Account created successfully!", {
+  id: toastId,
+});
 
-      toast.error(message, { id: toastId });
+onClose();
+onShowLogin();
 
-    } finally {
+} catch (err: any) {
+  const message =
+    err?.response?.data?.message || "Signup failed";
+
+  setError(message);
+
+  toast.error(message, { id: toastId });
+}finally {
       setLoading(false);
     }
   };
