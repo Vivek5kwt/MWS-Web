@@ -35,6 +35,7 @@ const authSlice = createSlice({
       state.token = null;
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("wealthScores");
     },
     setCredentials: (state, action) => {
       state.user = action.payload.user;

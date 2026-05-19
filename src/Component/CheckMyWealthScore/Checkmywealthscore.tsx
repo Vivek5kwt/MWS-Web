@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./checkmywealthscore.css";
 import ProgressBar from "./Progressbar";
@@ -42,6 +43,7 @@ const mapAverageAnnualReturn = (val: string): number => {
 };
 
 const CheckMyWealthScore: React.FC = () => {
+  const { token } = useSelector((state: any) => state.auth);
   const [currentStep, setCurrentStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   // const [navOpen, setNavOpen] = useState(false);
@@ -251,6 +253,32 @@ if (Number(debt.personalLoanOutstanding) > 0) {
       setDebtInterp(debtResult.interpretation ?? "");
       setInsuranceInterp(insResult.interpretation ?? "");
       setInvestmentInterp(invResult.interpretation ?? "");
+
+      // Always save to localStorage so homepage can read immediately
+      const scorePayload = {
+        final_score:      finResult.final_score,
+        liquidity_score:  liqResult.total_score,
+        debt_score:       debtResult.total_score,
+        insurance_score:  insResult.insurance_score,
+        investment_score: invResult.investment_score,
+      };
+      localStorage.setItem("wealthScores", JSON.stringify(scorePayload));
+
+      // Also try to persist to backend (non-blocking, fail silently)
+      try {
+        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+        const saveRes = await fetch("/auth-api/api/wealth-score", {
+          method: "POST",
+          headers,
+          body: JSON.stringify(scorePayload),
+        });
+        const saveBody = await saveRes.json().catch(() => null);
+        console.log("[wealth-score POST]", saveRes.status, saveBody);
+      } catch (e) {
+        console.error("[wealth-score POST] failed:", e);
+      }
+
       setSubmitted(true);
     } catch (err) {
       console.error("API call failed:", err);

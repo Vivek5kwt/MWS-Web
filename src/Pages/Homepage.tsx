@@ -1,15 +1,91 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Homepage.css'
 
-interface HomepageProps {
-  score?: number
+interface WealthScores {
+  finalScore: number
+  liquidityScore: number
+  investmentScore: number
+  debtScore: number
+  insuranceScore: number
 }
 
-export default function Homepage({ score = 75 }: HomepageProps) {
+const DEFAULT_SCORES: WealthScores = {
+  finalScore: 75,
+  liquidityScore: 25,
+  investmentScore: 45,
+  debtScore: 75,
+  insuranceScore: 85,
+}
+
+export default function Homepage() {
   const carouselRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
+  const { token } = useSelector((state: any) => state.auth)
+
+  const [scores, setScores] = useState<WealthScores>(DEFAULT_SCORES)
+  const [scoresLoading, setScoresLoading] = useState(false)
+
+  // ── Fetch / clear wealth scores whenever auth state changes ────────────────
+  useEffect(() => {
+    // Logged out — clear immediately, show nothing
+    if (!token) {
+      setScores(DEFAULT_SCORES)
+      return
+    }
+
+    const parseScores = (d: any): WealthScores => ({
+      finalScore:      d.final_score      ?? d.finalScore      ?? DEFAULT_SCORES.finalScore,
+      liquidityScore:  d.liquidity_score  ?? d.liquidityScore  ?? DEFAULT_SCORES.liquidityScore,
+      investmentScore: d.investment_score ?? d.investmentScore ?? DEFAULT_SCORES.investmentScore,
+      debtScore:       d.debt_score       ?? d.debtScore       ?? DEFAULT_SCORES.debtScore,
+      insuranceScore:  d.insurance_score  ?? d.insuranceScore  ?? DEFAULT_SCORES.insuranceScore,
+    })
+
+    const fetchScores = async () => {
+      setScoresLoading(true)
+      try {
+        // 1. Try localStorage first (written immediately after calculation)
+        const cached = localStorage.getItem('wealthScores')
+        if (cached) {
+          setScores(parseScores(JSON.parse(cached)))
+          setScoresLoading(false)
+          return
+        }
+
+        // 2. Fall back to API
+        const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+        headers['Authorization'] = `Bearer ${token}`
+        const res = await fetch('/auth-api/api/wealth-score', { headers })
+        const raw = await res.json().catch(() => null)
+        console.log('[wealth-score GET]', res.status, raw)
+        if (!res.ok || !raw) return
+
+        const d = raw.data ?? raw.scores ?? (Array.isArray(raw) ? raw[0] : null) ?? raw
+        const fetched = parseScores(d)
+        localStorage.setItem('wealthScores', JSON.stringify({
+          final_score:      fetched.finalScore,
+          liquidity_score:  fetched.liquidityScore,
+          investment_score: fetched.investmentScore,
+          debt_score:       fetched.debtScore,
+          insurance_score:  fetched.insuranceScore,
+        }))
+        setScores(fetched)
+      } catch (e) {
+        console.error('[wealth-score GET] failed:', e)
+      } finally {
+        setScoresLoading(false)
+      }
+    }
+    fetchScores()
+  }, [token])
+
+  const scoreLabel = (s: number) =>
+    s >= 70 ? 'GOOD FINANCIAL HEALTH' :
+    s >= 40 ? 'CONCERNING FINANCIAL HEALTH' :
+              'POOR FINANCIAL HEALTH'
 
   // ── Scroll animation observer ──────────────────────────────────────────────
   useEffect(() => {
@@ -47,7 +123,7 @@ export default function Homepage({ score = 75 }: HomepageProps) {
     })
 
     return () => observer.disconnect()
-  }, [])
+  }, [scores])
 
   // ── Helper functions (outside useEffect) ─────────────────────────────────
   function scrollCarousel(direction: 'left' | 'right') {
@@ -100,35 +176,41 @@ export default function Homepage({ score = 75 }: HomepageProps) {
         <div className="content col-12 col-md-5 score-col d-flex align-items-center justify-content-center mt-4 mt-md-0">
           <div className="score-card scroll-animate" style={{ marginTop: '0' }}>
             <h2>Wealth Score</h2>
-            <div
-              className={`progress-circle main-score ${score >= 60 ? 'blue' : 'orange'}`}
-              data-value={score}
-            >
-              <span>{score}</span>
-            </div>
-            <div className="status-text">CONCERNING FINANCIAL HEALTH</div>
+            {scoresLoading ? (
+              <div className="progress-circle main-score blue" data-value="0">
+                <span style={{ fontSize: '0.8rem' }}>...</span>
+              </div>
+            ) : (
+              <div
+                className={`progress-circle main-score ${scores.finalScore >= 60 ? 'blue' : 'orange'}`}
+                data-value={scores.finalScore}
+              >
+                <span>{scores.finalScore}</span>
+              </div>
+            )}
+            <div className="status-text">{scoreLabel(scores.finalScore)}</div>
             <div className="metrics">
               <div className="metric">
-                <div className="progress-circle orange" data-value="25">
-                  <span>25</span>
+                <div className={`progress-circle ${scores.liquidityScore >= 60 ? 'blue' : 'orange'}`} data-value={scores.liquidityScore}>
+                  <span>{scores.liquidityScore}</span>
                 </div>
                 <div>Liquidity</div>
               </div>
               <div className="metric">
-                <div className="progress-circle orange" data-value="45">
-                  <span>45</span>
+                <div className={`progress-circle ${scores.investmentScore >= 60 ? 'blue' : 'orange'}`} data-value={scores.investmentScore}>
+                  <span>{scores.investmentScore}</span>
                 </div>
                 <div>Investments</div>
               </div>
               <div className="metric">
-                <div className="progress-circle blue" data-value="75">
-                  <span>75</span>
+                <div className={`progress-circle ${scores.debtScore >= 60 ? 'blue' : 'orange'}`} data-value={scores.debtScore}>
+                  <span>{scores.debtScore}</span>
                 </div>
                 <div>Debt</div>
               </div>
               <div className="metric">
-                <div className="progress-circle blue" data-value="85">
-                  <span>85</span>
+                <div className={`progress-circle ${scores.insuranceScore >= 60 ? 'blue' : 'orange'}`} data-value={scores.insuranceScore}>
+                  <span>{scores.insuranceScore}</span>
                 </div>
                 <div>Insurance</div>
               </div>

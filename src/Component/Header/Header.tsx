@@ -111,8 +111,8 @@ const Header: React.FC = () => {
 </span>
 
     {openDropdown && (
-      <div className="mws-user-dropdown mt-1">
-        <button onClick={handleLogout} className="p-2">
+      <div className="mws-user-dropdown mt-1 logout-dropdown">
+        <button onClick={handleLogout} className="p-2 logout-btn">
           Logout
         </button>
       </div>
