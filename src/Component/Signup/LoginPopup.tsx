@@ -120,6 +120,7 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) =
     if (result.meta.requestStatus === "fulfilled") {
       toast.success("Login Successfully");
       onClose();
+      window.location.href = "/admin";
     } else {
       setError(result.payload?.message || "Login failed");
     }
