@@ -5,7 +5,7 @@ import {
 
 Chart.register(BarController, CategoryScale, LinearScale, BarElement, Tooltip, Legend)
 
-const API_URL = '/auth-api/api/users'
+const API_URL = 'https://admin.mywealthscore.ai/api/users'
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
 const gridColor = 'rgba(204,204,204,0.1)'
 const currentYear = new Date().getFullYear()

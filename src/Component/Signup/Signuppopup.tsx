@@ -55,7 +55,7 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
     const toastId = toast.loading("Creating account...");
 
    try {
-  await axios.post(`/auth-api/api/register`, {
+  await axios.post(`https://admin.mywealthscore.ai/api/register`, {
     email,
     name,
     phone_number,

@@ -6,7 +6,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`/auth-api/api/login`, userData);
+      const res = await axios.post(`https://admin.mywealthscore.ai/api/login`, userData);
 
       const token = res.data.token;
       const user = res.data.data || res.data.user || res.data;

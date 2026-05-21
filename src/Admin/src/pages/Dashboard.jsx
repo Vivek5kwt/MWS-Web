@@ -4,7 +4,7 @@ export default function Dashboard() {
   const [userCount, setUserCount] = useState('...')
 
   useEffect(() => {
-    fetch('/auth-api/api/users')
+    fetch('https://admin.mywealthscore.ai/api/users')
       .then(res => res.json())
       .then(json => { if (json.success) setUserCount(json.data.length) })
       .catch(() => setUserCount('—'))

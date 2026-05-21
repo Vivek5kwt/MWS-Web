@@ -58,7 +58,7 @@ export default function Homepage() {
         // 2. Fall back to API
         const headers: Record<string, string> = { 'Content-Type': 'application/json' }
         headers['Authorization'] = `Bearer ${token}`
-        const res = await fetch('/auth-api/api/wealth-score', { headers })
+        const res = await fetch('https://admin.mywealthscore.ai/api/wealth-score', { headers })
         const raw = await res.json().catch(() => null)
         console.log('[wealth-score GET]', res.status, raw)
         if (!res.ok || !raw) return

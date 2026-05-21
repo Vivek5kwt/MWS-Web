@@ -268,7 +268,7 @@ if (Number(debt.personalLoanOutstanding) > 0) {
       try {
         const headers: Record<string, string> = { "Content-Type": "application/json" };
         if (token) headers["Authorization"] = `Bearer ${token}`;
-        const saveRes = await fetch("/auth-api/api/wealth-score", {
+        const saveRes = await fetch("https://admin.mywealthscore.ai/api/wealth-score", {
           method: "POST",
           headers,
           body: JSON.stringify(scorePayload),

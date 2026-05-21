@@ -10,11 +10,6 @@ export default defineConfig({
         target: 'http://3.110.223.162:8000',
         changeOrigin: true,
       },
-      '/auth-api': {
-        target: 'https://admin.mywealthscore.ai/',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/auth-api/, ''),
-      },
     },
   },
 })
