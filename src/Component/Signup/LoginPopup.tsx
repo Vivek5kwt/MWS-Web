@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import type { FormEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/authSlice";
+import { loginUser, googleLoginUser } from "../../redux/authSlice";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../firebase";
 import "./LoginPopup.css";
 import toast from "react-hot-toast";
 
@@ -97,6 +99,27 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) =
   const [countryCode, setCountryCode] = useState("+91");
   const [error, setError] = useState("");
 
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    setGoogleLoading(true);
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const idToken = await result.user.getIdToken();
+      const res = await dispatch((googleLoginUser as any)(idToken));
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success("Login Successfully");
+        onClose();
+      } else {
+        setError(res.payload?.message || "Google login failed");
+      }
+    } catch (err: any) {
+      setError(err.message || "Google login failed");
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
   const handleEmailContinue = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email) { setError("Please enter your email"); return; }
@@ -120,7 +143,6 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) =
     if (result.meta.requestStatus === "fulfilled") {
       toast.success("Login Successfully");
       onClose();
-      window.location.href = "/admin";
     } else {
       setError(result.payload?.message || "Login failed");
     }
@@ -145,8 +167,8 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) =
               Continue with Google or Email, we'll create your free account if you're new.
             </p>
 
-            <button className="lp-btn lp-btn--google">
-              Continue with Google
+            <button className="lp-btn lp-btn--google" onClick={handleGoogleLogin} disabled={googleLoading}>
+              {googleLoading ? "Signing in..." : "Continue with Google"}
             </button>
 
             <button className="lp-btn lp-btn--email" onClick={() => setStep("email")}>

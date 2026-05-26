@@ -1,7 +1,7 @@
 // src/redux/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-// 🔥 Login API call
+
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue }) => {
@@ -14,6 +14,22 @@ export const loginUser = createAsyncThunk(
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
+      return { token, user };
+    } catch (err) {
+      return rejectWithValue(err.response?.data);
+    }
+  }
+);
+
+export const googleLoginUser = createAsyncThunk(
+  "auth/googleLoginUser",
+  async (idToken, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(`https://admin.mywealthscore.ai/api/google-login`, { idToken });
+      const token = res.data.token;
+      const user = res.data.data || res.data.user || res.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
       return { token, user };
     } catch (err) {
       return rejectWithValue(err.response?.data);
@@ -56,6 +72,19 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Login failed";
+      })
+      .addCase(googleLoginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(googleLoginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+      })
+      .addCase(googleLoginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Google login failed";
       });
   },
 });

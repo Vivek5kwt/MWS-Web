@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/authSlice";
@@ -32,6 +32,12 @@ const Header: React.FC = () => {
 
   // 🔥 Redux user
   const { user } = useSelector((state: any) => state.auth);
+
+  useEffect(() => {
+    if (user) return;
+    const timer = setTimeout(() => setActivePopup("login"), 5000);
+    return () => clearTimeout(timer);
+  }, [user]);
 
   const initial = user?.name?.charAt(0)?.toUpperCase();
 

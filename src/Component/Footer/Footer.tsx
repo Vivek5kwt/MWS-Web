@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./footer.css";
 
@@ -76,7 +77,7 @@ const quickLinks: QuickLink[] = [
   { label: "How It Works", href: "#" },
   { label: "Security", href: "#" },
   { label: "Privacy Policy", href: "#" },
-  { label: "Contact Us", href: "#" },
+  { label: "Terms and conditions", href: "#" },
   { label: "Blog", href: "#" },
 ];
 
@@ -107,6 +108,56 @@ const contactItems: ContactItem[] = [
 // ── Component ─────────────────────────────────────────────────────────────────
 
 const Footer: React.FC = () => {
+  const [policyOpen, setPolicyOpen] = useState(false);
+  const [policyContent, setPolicyContent] = useState("");
+  const [policyLoading, setPolicyLoading] = useState(false);
+
+  const [termsOpen, setTermsOpen] = useState(false);
+  const [termsContent, setTermsContent] = useState("");
+  const [termsLoading, setTermsLoading] = useState(false);
+
+  const handleTermsClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setTermsOpen(true);
+    if (termsContent) return;
+    setTermsLoading(true);
+    try {
+      const res = await axios.get("https://admin.mywealthscore.ai/api/terms-and-conditions");
+      const data = res.data;
+      const items: any[] = Array.isArray(data?.data) ? data.data : [];
+      const extracted = items
+        .map((item: any) => item?.content || item?.text || item?.body || item?.description || item?.policy || "")
+        .filter(Boolean)
+        .join("\n\n");
+      setTermsContent(extracted || "No terms content available.");
+    } catch {
+      setTermsContent("Failed to load Terms and Conditions. Please try again later.");
+    } finally {
+      setTermsLoading(false);
+    }
+  };
+
+  const handlePolicyClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setPolicyOpen(true);
+    if (policyContent) return;
+    setPolicyLoading(true);
+    try {
+      const res = await axios.get("https://admin.mywealthscore.ai/api/policy");
+      const data = res.data;
+      const items: any[] = Array.isArray(data?.data) ? data.data : [];
+      const extracted = items
+        .map((item: any) => item?.content || item?.text || item?.body || item?.description || item?.policy || "")
+        .filter(Boolean)
+        .join("\n\n");
+      setPolicyContent(extracted || "No policy content available.");
+    } catch {
+      setPolicyContent("Failed to load Privacy Policy. Please try again later.");
+    } finally {
+      setPolicyLoading(false);
+    }
+  };
+
   return (
     <footer className="custom-footer">
       <div className="container">
@@ -149,7 +200,13 @@ const Footer: React.FC = () => {
             <ul className="footer-links">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href}>{link.label}</a>
+                  {link.label === "Privacy Policy" ? (
+                    <a href="#" onClick={handlePolicyClick}>{link.label}</a>
+                  ) : link.label === "Terms and conditions" ? (
+                    <a href="#" onClick={handleTermsClick}>{link.label}</a>
+                  ) : (
+                    <a href={link.href}>{link.label}</a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -195,6 +252,41 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </div>
+      {termsOpen && (
+        <div className="policy-backdrop" onClick={() => setTermsOpen(false)}>
+          <div className="policy-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="policy-header">
+              <h2>Terms and Conditions</h2>
+              <button className="policy-close" onClick={() => setTermsOpen(false)}>&times;</button>
+            </div>
+            <div className="policy-body">
+              {termsLoading ? (
+                <p className="policy-loading">Loading...</p>
+              ) : (
+                <div dangerouslySetInnerHTML={{ __html: termsContent }} />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {policyOpen && (
+        <div className="policy-backdrop" onClick={() => setPolicyOpen(false)}>
+          <div className="policy-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="policy-header">
+              <h2>Privacy Policy</h2>
+              <button className="policy-close" onClick={() => setPolicyOpen(false)}>&times;</button>
+            </div>
+            <div className="policy-body">
+              {policyLoading ? (
+                <p className="policy-loading">Loading...</p>
+              ) : (
+                <div dangerouslySetInnerHTML={{ __html: policyContent }} />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </footer>
   );
 };
