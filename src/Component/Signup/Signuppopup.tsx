@@ -3,7 +3,7 @@ import type { ChangeEvent } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { googleLoginUser } from "../../redux/authSlice";
+import { googleLoginUser, loginUser } from "../../redux/authSlice";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase";
 import "./Signuppopup.css";
@@ -74,15 +74,17 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
     setLoading(true);
     const toastId = toast.loading("Sending OTP...");
     try {
-      await axios.post("https://admin.mywealthscore.ai/api/send-otp", {
-        phone_number,
+      const otpRes = await axios.post("https://admin.mywealthscore.ai/api/send-otp", {
+        phone_number: `+91${phone_number}`,
         otp_type: "phone",
       });
+      console.log("send-otp response:", otpRes.data);
       toast.success("OTP sent to your phone!", { id: toastId });
       setError("");
       setStep("phone-otp");
     } catch (err: any) {
-      const message = err?.response?.data?.message || "Failed to send OTP";
+      console.error("send-otp error:", err?.response?.data);
+      const message = err?.response?.data?.message || err?.response?.data?.error || "Failed to send OTP";
       setError(message);
       toast.error(message, { id: toastId });
     } finally {
@@ -101,7 +103,7 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
     const toastId = toast.loading("Verifying phone OTP...");
     try {
       const verifyRes = await axios.post("https://admin.mywealthscore.ai/api/verify-otp", {
-        phone_number,
+        phone_number: `+91${phone_number}`,
         otp: phoneOtp,
         device_token: "web",
       });
@@ -149,18 +151,16 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
         otp: emailOtp,
       });
 
-      // Both verified — register
-      toast.loading("Creating account...", { id: toastId });
-      await axios.post("https://admin.mywealthscore.ai/api/register", {
-        email,
-        name,
-        phone_number,
-        password,
-      });
-
-      toast.success("Account created successfully!", { id: toastId });
-      onClose();
-      onShowLogin();
+      // Account was already created by verify-otp — just auto-login
+      const loginRes = await dispatch((loginUser as any)({ email, password }));
+      if (loginRes.meta.requestStatus === "fulfilled") {
+        toast.success("Account created & logged in!", { id: toastId });
+        onClose();
+      } else {
+        toast.success("Account created! Please log in.", { id: toastId });
+        onClose();
+        onShowLogin();
+      }
     } catch (err: any) {
       const message = err?.response?.data?.message || "Verification failed";
       setError(message);
@@ -174,7 +174,7 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
     const toastId = toast.loading("Resending OTP...");
     try {
       await axios.post("https://admin.mywealthscore.ai/api/send-otp", {
-        phone_number,
+        phone_number: `+91${phone_number}`,
         otp_type: "phone",
       });
       toast.success("OTP resent!", { id: toastId });
@@ -286,7 +286,7 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
           <>
             <button className="lp-back" onClick={() => setStep("details")}>←</button>
             <h2 className="lp-title">Verify Phone</h2>
-            <p className="lp-subtitle">Enter the OTP sent to +91 {phone_number}</p>
+            <p className="lp-subtitle">Enter the OTP sent to +91{phone_number}</p>
 
             {error && <div className="lp-error">{error}</div>}
 
