@@ -256,24 +256,30 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
             {error && <div className="lp-error">{error}</div>}
 
             <form onSubmit={handleSendPhoneOtp} className="lp-form">
-              <input
-                type="text"
-                placeholder="Full name"
-                value={name}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => { setName(e.target.value); setError(""); }}
-              />
-              <input
-                type="tel"
-                placeholder="Phone number"
-                value={phone_number}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => { setPhone_number(e.target.value); setError(""); }}
-              />
-              <input
-                type="password"
-                placeholder="Create password"
-                value={password}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value); setError(""); }}
-              />
+              <div className="sp-field-row">
+                <span className="sp-field-label">Full name</span>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => { setName(e.target.value); setError(""); }}
+                />
+              </div>
+              <div className="sp-field-row">
+                <span className="sp-field-label">Phone number</span>
+                <input
+                  type="tel"
+                  value={phone_number}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => { setPhone_number(e.target.value); setError(""); }}
+                />
+              </div>
+              <div className="sp-field-row">
+                <span className="sp-field-label">Create password</span>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value); setError(""); }}
+                />
+              </div>
               <button type="submit" className="lp-btn lp-btn--submit" disabled={loading}>
                 {loading ? "Sending OTP..." : "Send OTP"}
               </button>

@@ -25,13 +25,14 @@ export const googleLoginUser = createAsyncThunk(
   "auth/googleLoginUser",
   async (idToken, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`https://admin.mywealthscore.ai/api/google-login`, { idToken });
+      const res = await axios.post(`https://admin.mywealthscore.ai/api/google-login`, { id_token: idToken });
       const token = res.data.token;
       const user = res.data.data || res.data.user || res.data;
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
       return { token, user };
     } catch (err) {
+      console.error("google-login error:", err.response?.data);
       return rejectWithValue(err.response?.data);
     }
   }
