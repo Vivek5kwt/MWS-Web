@@ -44,7 +44,12 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
         setError(res.payload?.message || "Google sign-up failed");
       }
     } catch (err: any) {
-      setError(err.message || "Google sign-up failed");
+      console.error("Google sign-up error:", err.code, err.message);
+      if (err.code === "auth/popup-closed-by-user" || err.code === "auth/cancelled-popup-request") {
+        setError("");
+      } else {
+        setError(err.message || "Google sign-up failed");
+      }
     } finally {
       setGoogleLoading(false);
     }
@@ -210,6 +215,8 @@ const SignUpPopup: React.FC<Props> = ({ onClose, onShowLogin }) => {
             <button className="lp-close" onClick={onClose}>&times;</button>
             <h2 className="lp-title">Create Account</h2>
             <p className="lp-subtitle">Sign up with Google or Email to get started for free.</p>
+
+            {error && <div className="lp-error">{error}</div>}
 
             <button className="lp-btn lp-btn--google" onClick={handleGoogleSignUp} disabled={googleLoading}>
               {googleLoading ? "Signing in..." : "Continue with Google"}

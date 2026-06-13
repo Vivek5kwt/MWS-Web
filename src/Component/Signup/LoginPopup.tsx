@@ -114,7 +114,12 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) =
         setError(res.payload?.message || "Google login failed");
       }
     } catch (err: any) {
-      setError(err.message || "Google login failed");
+      console.error("Google login error:", err.code, err.message);
+      if (err.code === "auth/popup-closed-by-user" || err.code === "auth/cancelled-popup-request") {
+        setError("");
+      } else {
+        setError(err.message || "Google login failed");
+      }
     } finally {
       setGoogleLoading(false);
     }
@@ -166,6 +171,8 @@ const Login: React.FC<LoginProps> = ({ onClose, onShowSignUp: _onShowSignUp }) =
             <p className="lp-subtitle">
               Continue with Google or Email, we'll create your free account if you're new.
             </p>
+
+            {error && <div className="lp-error">{error}</div>}
 
             <button className="lp-btn lp-btn--google" onClick={handleGoogleLogin} disabled={googleLoading}>
               {googleLoading ? "Signing in..." : "Continue with Google"}
